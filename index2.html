@@ -1,0 +1,3983 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="doc-title">Magic Chic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&family=Playfair+Display:ital,wght@0,300;0,400;1,300&family=Cinzel:wght@300;400&family=DM+Serif+Display:ital@0;1&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════
+   CSS VARIABLES & RESET
+═══════════════════════════════ */
+        :root {
+            --bg: #09080f;
+            --bg2: #0f0d1a;
+            --bg3: #16122a;
+            --card: #1a163a;
+            --bdr: rgba(200, 170, 255, .1);
+            --bdr2: rgba(200, 170, 255, .2);
+            --p1: #a87eff;
+            --p2: #d4b0ff;
+            --p3: #5c30cc;
+            --ac: #ffb8e0;
+            --gd: #f0d070;
+            --tx: #f2edff;
+            --tx2: #c4bde0;
+            --tx3: #7a7099;
+            --grn: #5ccca0;
+            --red: #d4606a;
+            --blu: #60a0e8;
+            --ff: 'Cormorant Garamond', serif;
+            --ffb: 'Jost', sans-serif;
+            --glow: 0 0 60px rgba(168, 126, 255, .2);
+            --glow2: 0 0 30px rgba(168, 126, 255, .12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--ffb);
+            background: var(--bg);
+            color: var(--tx);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            display: block;
+        }
+
+        button {
+            font-family: var(--ffb);
+        }
+
+        /* ═══════════════════════════════
+   MAGICAL CANVAS
+═══════════════════════════════ */
+        #cvs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            opacity: .5;
+        }
+
+        /* ═══════════════════════════════
+   NAV
+═══════════════════════════════ */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 400;
+            padding: 0 70px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(9, 8, 15, .82);
+            backdrop-filter: blur(28px);
+            border-bottom: 1px solid var(--bdr);
+            transition: box-shadow .4s;
+        }
+
+        nav.scrolled {
+            box-shadow: var(--glow2);
+        }
+
+        .nav-logo {
+            font-family: var(--ff);
+            font-size: 1.8rem;
+            font-weight: 400;
+            letter-spacing: .06em;
+            color: var(--tx);
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .nav-logo em {
+            background: linear-gradient(135deg, var(--p2), var(--ac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 36px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-size: .68rem;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            color: var(--tx3);
+            position: relative;
+            transition: color .25s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--p2);
+            transition: width .35s;
+        }
+
+        .nav-links a:hover {
+            color: var(--p2);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-r {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .cart-wrap {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-wrap button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            color: var(--tx);
+            cursor: pointer;
+        }
+
+        .cart-num {
+            position: absolute;
+            top: -5px;
+            right: -7px;
+            background: var(--p1);
+            color: #fff;
+            border-radius: 50%;
+            width: 17px;
+            height: 17px;
+            font-size: .5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-btn {
+            background: transparent;
+            border: 1px solid rgba(168, 126, 255, .45);
+            color: var(--p2);
+            padding: 9px 24px;
+            font-size: .65rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all .3s;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--p3), var(--p1));
+            transform: translateX(-100%);
+            transition: transform .35s;
+        }
+
+        .cta-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn:hover {
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .cta-btn:hover::before {
+            transform: translateX(0);
+        }
+
+        /* ═══════════════════════════════
+   HERO
+═══════════════════════════════ */
+        .hero {
+            min-height: 100vh;
+            padding-top: 72px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 60px 80px 90px;
+            position: relative;
+        }
+
+        /* Floating orb backgrounds */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: orbDrift 10s ease-in-out infinite;
+        }
+
+        .orb-a {
+            width: 580px;
+            height: 580px;
+            background: radial-gradient(circle, rgba(92, 48, 204, .18) 0%, transparent 65%);
+            top: -160px;
+            left: -160px;
+        }
+
+        .orb-b {
+            width: 260px;
+            height: 260px;
+            background: radial-gradient(circle, rgba(255, 184, 224, .1) 0%, transparent 65%);
+            bottom: 60px;
+            right: 20px;
+            animation-delay: -5s;
+        }
+
+        @keyframes orbDrift {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(22px, 15px) scale(1.03);
+            }
+
+            66% {
+                transform: translate(-12px, 28px) scale(.97);
+            }
+        }
+
+        .hero-eyebrow {
+            font-size: .6rem;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--p2);
+            margin-bottom: 24px;
+            opacity: .8;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            width: 40px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--p1), transparent);
+        }
+
+        .hero-h1 {
+            font-family: var(--ff);
+            font-size: clamp(3rem, 5.5vw, 5.5rem);
+            font-weight: 300;
+            line-height: 1.04;
+            color: var(--tx);
+            margin-bottom: 24px;
+        }
+
+        .hero-h1 em {
+            background: linear-gradient(135deg, var(--p2) 0%, var(--ac) 60%, var(--gd) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+            display: block;
+        }
+
+        .hero-body {
+            font-size: .88rem;
+            line-height: 2;
+            color: var(--tx3);
+            max-width: 380px;
+            margin-bottom: 44px;
+            font-weight: 300;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 52px;
+        }
+
+        .btn-fill {
+            background: linear-gradient(135deg, var(--p3), var(--p1));
+            color: #fff;
+            padding: 13px 34px;
+            font-size: .68rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: all .3s;
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .btn-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--p1), var(--p2));
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .btn-fill:hover::after {
+            opacity: 1;
+        }
+
+        .btn-fill span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--p2);
+            padding: 13px 34px;
+            font-size: .68rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            border: 1px solid rgba(168, 126, 255, .3);
+            cursor: pointer;
+            transition: all .3s;
+            display: inline-block;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--p2);
+            background: rgba(168, 126, 255, .07);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 38px;
+            padding-top: 28px;
+            border-top: 1px solid var(--bdr);
+        }
+
+        .stat-val {
+            font-family: var(--ff);
+            font-size: 2.2rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, var(--tx), var(--p2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-lbl {
+            font-size: .58rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--tx3);
+            margin-top: 3px;
+        }
+
+        /* Hero right — image mosaic */
+        .hero-right {
+            background: var(--bg2);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-mosaic {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 100%;
+            gap: 4px;
+        }
+
+        .mosaic-img {
+            overflow: hidden;
+            background: var(--bg3);
+            position: relative;
+        }
+
+        .mosaic-img.big {
+            grid-row: 1/3;
+        }
+
+        .mosaic-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(.65) brightness(.78);
+            transition: all .7s;
+        }
+
+        .mosaic-img:hover img {
+            transform: scale(1.07);
+            filter: saturate(.88) brightness(.9);
+        }
+
+        .mosaic-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 45%, rgba(9, 8, 15, .55));
+            pointer-events: none;
+        }
+
+        .price-chip {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            z-index: 2;
+            background: rgba(9, 8, 15, .8);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--bdr);
+            padding: 5px 14px;
+            font-size: .72rem;
+            color: var(--p2);
+            letter-spacing: .08em;
+        }
+
+        /* ═══════════════════════════════
+   MARQUEE
+═══════════════════════════════ */
+        .marquee {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--p3) 0%, #3a1a8a 50%, var(--p3) 100%);
+            padding: 15px 0;
+            overflow: hidden;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 64px;
+            white-space: nowrap;
+            animation: marquee-scroll 28s linear infinite;
+        }
+
+        .marquee-item {
+            font-size: .62rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .72);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .marquee-item::after {
+            content: '✦';
+            color: rgba(255, 255, 255, .3);
+            font-size: .38rem;
+        }
+
+        @keyframes marquee-scroll {
+            from {
+                transform: translateX(0)
+            }
+
+            to {
+                transform: translateX(-50%)
+            }
+        }
+
+        /* ═══════════════════════════════
+   SECTION COMMON
+═══════════════════════════════ */
+        .section {
+            padding: 96px 90px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            margin-bottom: 56px;
+        }
+
+        .section-label {
+            font-size: .58rem;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--p2);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            opacity: .8;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 32px;
+            height: 1px;
+            background: linear-gradient(90deg, var(--p1), transparent);
+        }
+
+        .section-title {
+            font-family: var(--ff);
+            font-size: clamp(1.9rem, 3.2vw, 3.2rem);
+            font-weight: 300;
+            color: var(--tx);
+            line-height: 1.1;
+        }
+
+        .section-title em {
+            background: linear-gradient(135deg, var(--p2), var(--ac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+        }
+
+        .see-all {
+            font-size: .64rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--p2);
+            opacity: .7;
+            border-bottom: 1px solid rgba(168, 126, 255, .3);
+            padding-bottom: 2px;
+            transition: all .25s;
+        }
+
+        .see-all:hover {
+            opacity: 1;
+            border-color: var(--p2);
+        }
+
+        /* ═══════════════════════════════
+   PRODUCTS
+═══════════════════════════════ */
+        #products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .prod-card {
+            cursor: pointer;
+            animation: fadeUp .55s ease both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .prod-img {
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            background: var(--card);
+            position: relative;
+            margin-bottom: 14px;
+            border: 1px solid var(--bdr);
+        }
+
+        .prod-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(.6) brightness(.8);
+            transition: all .6s;
+        }
+
+        .prod-card:hover .prod-img img {
+            transform: scale(1.08);
+            filter: saturate(.9) brightness(.9);
+        }
+
+        .prod-img::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 50%, rgba(9, 8, 15, .7));
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .prod-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            z-index: 2;
+            background: linear-gradient(135deg, var(--p3), var(--p1));
+            color: #fff;
+            font-size: .54rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+        }
+
+        .prod-badge.sold {
+            background: rgba(100, 90, 130, .8);
+        }
+
+        .prod-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 3;
+            background: rgba(9, 8, 15, .92);
+            backdrop-filter: blur(12px);
+            padding: 12px;
+            display: flex;
+            gap: 8px;
+            transform: translateY(100%);
+            transition: transform .3s;
+            border-top: 1px solid var(--bdr);
+        }
+
+        .prod-card:hover .prod-actions {
+            transform: translateY(0);
+        }
+
+        .prod-actions button {
+            flex: 1;
+            background: none;
+            border: 1px solid rgba(168, 126, 255, .3);
+            color: var(--p2);
+            font-size: .58rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            padding: 8px;
+            cursor: pointer;
+            transition: all .22s;
+        }
+
+        .prod-actions button:hover {
+            background: var(--p1);
+            border-color: var(--p1);
+            color: #fff;
+        }
+
+        .prod-name {
+            font-size: .84rem;
+            font-weight: 400;
+            margin-bottom: 5px;
+            color: var(--tx2);
+        }
+
+        .prod-price {
+            font-family: var(--ff);
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, var(--p2), var(--ac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -75%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .04), transparent);
+            animation: shim 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes shim {
+            0% {
+                left: -75%
+            }
+
+            100% {
+                left: 130%
+            }
+        }
+
+        /* Dot gallery nav */
+        .img-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+            z-index: 4;
+        }
+
+        .img-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background .2s;
+        }
+
+        /* ═══════════════════════════════
+   RAMADAN BANNER
+═══════════════════════════════ */
+        .ramadan {
+            margin: 0 90px 96px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            background: linear-gradient(135deg, #14103a 0%, #261060 50%, #14103a 100%);
+            border: 1px solid rgba(168, 126, 255, .2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 72px 80px;
+        }
+
+        .ramadan-glow {
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 126, 255, .14), transparent 65%);
+            top: -80px;
+            right: 100px;
+            animation: orbDrift 8s ease-in-out infinite reverse;
+        }
+
+        .ramadan-arabic {
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--ff);
+            font-size: 14rem;
+            font-weight: 300;
+            color: rgba(168, 126, 255, .04);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .ramadan-tag {
+            font-size: .6rem;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: var(--gd);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ramadan-tag::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--gd);
+        }
+
+        .ramadan h2 {
+            font-family: var(--ff);
+            font-size: clamp(1.8rem, 3vw, 3rem);
+            font-weight: 300;
+            line-height: 1.2;
+            color: var(--tx);
+            margin-bottom: 14px;
+        }
+
+        .ramadan p {
+            font-size: .84rem;
+            color: rgba(255, 255, 255, .45);
+            max-width: 330px;
+            line-height: 1.92;
+            margin-bottom: 28px;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #8a6020, var(--gd));
+            color: #1a0a00;
+            padding: 13px 32px;
+            font-size: .68rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all .3s;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 32px rgba(240, 208, 112, .3);
+        }
+
+        .ram-cards {
+            display: flex;
+            gap: 14px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ram-card {
+            background: rgba(168, 126, 255, .07);
+            border: 1px solid rgba(168, 126, 255, .18);
+            padding: 26px 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            min-width: 140px;
+        }
+
+        .ram-price {
+            font-family: var(--ff);
+            font-size: 2.2rem;
+            font-weight: 300;
+            background: linear-gradient(135deg, var(--p2), var(--gd));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .ram-name {
+            font-size: .58rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .4);
+            margin-top: 7px;
+        }
+
+        /* ═══════════════════════════════
+   FEATURES
+═══════════════════════════════ */
+        .features {
+            background: var(--bg2);
+            position: relative;
+            z-index: 1;
+            padding: 56px 90px;
+            border-top: 1px solid var(--bdr);
+            border-bottom: 1px solid var(--bdr);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 16px;
+        }
+
+        .feature-icon {
+            font-size: 1.7rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .feature-title {
+            font-family: var(--ff);
+            font-size: 1.05rem;
+            font-weight: 400;
+            color: var(--p2);
+            margin-bottom: 8px;
+        }
+
+        .feature-desc {
+            font-size: .74rem;
+            color: var(--tx3);
+            line-height: 1.82;
+        }
+
+        /* ═══════════════════════════════
+   TESTIMONIALS
+═══════════════════════════════ */
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .testi-card {
+            background: var(--card);
+            border: 1px solid var(--bdr);
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .3s;
+        }
+
+        .testi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--p3), var(--p2), transparent);
+        }
+
+        .testi-card:hover {
+            border-color: var(--bdr2);
+        }
+
+        .testi-q {
+            font-family: var(--ff);
+            font-size: 3rem;
+            line-height: .65;
+            background: linear-gradient(135deg, var(--p1), var(--p2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .testi-text {
+            font-family: var(--ff);
+            font-size: 1.05rem;
+            font-weight: 300;
+            font-style: italic;
+            line-height: 1.85;
+            margin-bottom: 22px;
+            color: var(--tx2);
+        }
+
+        .testi-stars {
+            color: var(--p2);
+            font-size: .72rem;
+            margin-bottom: 8px;
+            letter-spacing: .08em;
+        }
+
+        .testi-name {
+            font-size: .62rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--tx3);
+        }
+
+        /* ═══════════════════════════════
+   INSTAGRAM
+═══════════════════════════════ */
+        .ig-section {
+            background: var(--bg2);
+            padding: 96px 90px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ig-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 4px;
+            margin-top: 48px;
+        }
+
+        .ig-item {
+            aspect-ratio: 1;
+            overflow: hidden;
+            background: var(--card);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .ig-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(.55) brightness(.75);
+            transition: all .5s;
+        }
+
+        .ig-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(92, 48, 204, 0);
+            transition: background .35s;
+        }
+
+        .ig-overlay span {
+            color: #fff;
+            font-size: 1.4rem;
+            opacity: 0;
+            transform: scale(.7);
+            transition: all .35s;
+        }
+
+        .ig-item:hover img {
+            transform: scale(1.12);
+            filter: saturate(.9) brightness(.88);
+        }
+
+        .ig-item:hover .ig-overlay {
+            background: rgba(92, 48, 204, .5);
+        }
+
+        .ig-item:hover .ig-overlay span {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .ig-handle {
+            text-align: center;
+            margin-top: 26px;
+            font-family: var(--ff);
+            font-size: 1.02rem;
+            color: var(--tx3);
+        }
+
+        .ig-handle a {
+            color: var(--p2);
+            transition: color .2s;
+        }
+
+        .ig-handle a:hover {
+            color: var(--tx);
+        }
+
+        /* ═══════════════════════════════
+   FOOTER
+═══════════════════════════════ */
+        footer {
+            background: var(--bg);
+            border-top: 1px solid var(--bdr);
+            padding: 64px 90px 36px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr 1fr 1fr;
+            gap: 56px;
+            padding-bottom: 46px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--bdr);
+        }
+
+        .footer-brand-name {
+            font-family: var(--ff);
+            font-size: 1.9rem;
+            font-weight: 400;
+            letter-spacing: .08em;
+            display: block;
+            margin-bottom: 14px;
+        }
+
+        .footer-brand-name em {
+            background: linear-gradient(135deg, var(--p2), var(--ac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+        }
+
+        .footer-desc {
+            font-size: .76rem;
+            color: var(--tx3);
+            line-height: 1.9;
+            max-width: 220px;
+            margin-bottom: 22px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 10px;
+        }
+
+        .soc-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--bdr);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: .8rem;
+            cursor: pointer;
+            transition: all .25s;
+            color: var(--tx3);
+        }
+
+        .soc-btn:hover {
+            border-color: var(--p1);
+            color: var(--p2);
+            background: rgba(168, 126, 255, .08);
+        }
+
+        .footer-col h4 {
+            font-size: .58rem;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, var(--p2), var(--ac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 18px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            font-size: .76rem;
+            color: var(--tx3);
+            margin-bottom: 9px;
+            cursor: pointer;
+            transition: color .22s;
+        }
+
+        .footer-col li:hover {
+            color: var(--p2);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .footer-bottom p {
+            font-size: .66rem;
+            color: rgba(255, 255, 255, .2);
+        }
+
+        /* ═══════════════════════════════
+   WHATSAPP FAB
+═══════════════════════════════ */
+        .wa-fab {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 600;
+            background: linear-gradient(135deg, #0f7a6e, #25d366);
+            color: #fff;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 30px rgba(37, 211, 102, .38);
+            transition: all .3s;
+        }
+
+        .wa-fab:hover {
+            transform: scale(1.12);
+            box-shadow: 0 14px 44px rgba(37, 211, 102, .55);
+        }
+
+        /* ═══════════════════════════════
+   REVEAL ANIMATION
+═══════════════════════════════ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .75s ease, transform .75s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* ═══════════════════════════════
+   MODALS (ORDER & CART)
+═══════════════════════════════ */
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 800;
+            background: rgba(0, 0, 0, .82);
+            backdrop-filter: blur(14px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal-box {
+            background: var(--bg2);
+            border: 1px solid rgba(168, 126, 255, .25);
+            max-width: 560px;
+            width: 90%;
+            padding: 48px;
+            position: relative;
+            animation: modalIn .35s ease;
+            box-shadow: 0 28px 90px rgba(92, 48, 204, .3);
+        }
+
+        .modal-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--p3), var(--p2), transparent);
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: translateY(24px) scale(.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: var(--tx3);
+            transition: color .2s;
+        }
+
+        .modal-close:hover {
+            color: var(--tx);
+        }
+
+        .modal-title {
+            font-family: var(--ff);
+            font-size: 1.85rem;
+            font-weight: 300;
+            margin-bottom: 6px;
+        }
+
+        .modal-price {
+            font-family: var(--ff);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--p2), var(--ac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-desc {
+            font-size: .82rem;
+            line-height: 1.92;
+            color: var(--tx3);
+            margin-bottom: 24px;
+        }
+
+        .modal-tags {
+            display: flex;
+            gap: 9px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .modal-tag {
+            background: rgba(168, 126, 255, .1);
+            border: 1px solid rgba(168, 126, 255, .2);
+            padding: 4px 13px;
+            font-size: .62rem;
+            letter-spacing: .1em;
+            color: var(--p2);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 11px 15px;
+            margin-bottom: 11px;
+            border: 1px solid rgba(168, 126, 255, .2);
+            background: rgba(168, 126, 255, .05);
+            font-family: var(--ffb);
+            font-size: .82rem;
+            color: var(--tx);
+            outline: none;
+            transition: border-color .25s;
+        }
+
+        .form-input:focus {
+            border-color: var(--p1);
+        }
+
+        .form-input::placeholder {
+            color: var(--tx3);
+        }
+
+        /* ═══════════════════════════════
+   TOAST
+═══════════════════════════════ */
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            right: 26px;
+            z-index: 5000;
+            background: var(--card);
+            border: 1px solid rgba(168, 126, 255, .25);
+            color: var(--tx);
+            padding: 12px 22px;
+            font-size: .74rem;
+            letter-spacing: .08em;
+            transform: translateY(16px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all .32s;
+            box-shadow: var(--glow2);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .toast.ok {
+            border-color: rgba(92, 204, 160, .4);
+            color: var(--grn);
+        }
+
+        .toast.err {
+            border-color: rgba(212, 96, 106, .4);
+            color: var(--red);
+        }
+
+        /* ═══════════════════════════════
+   CONFIRM
+═══════════════════════════════ */
+        .confirm-wrap {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            background: rgba(0, 0, 0, .78);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .confirm-wrap.open {
+            display: flex;
+        }
+
+        .confirm-box {
+            background: var(--card);
+            border: 1px solid rgba(168, 126, 255, .22);
+            padding: 40px;
+            max-width: 360px;
+            width: 90%;
+            box-shadow: 0 24px 80px rgba(92, 48, 204, .28);
+        }
+
+        .confirm-box::before {
+            content: '';
+            display: block;
+            height: 2px;
+            background: linear-gradient(90deg, var(--p3), var(--p2));
+            margin-bottom: 26px;
+        }
+
+        .confirm-box h4 {
+            font-family: var(--ff);
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 11px;
+        }
+
+        .confirm-box p {
+            font-size: .78rem;
+            color: var(--tx3);
+            margin-bottom: 26px;
+            line-height: 1.75;
+        }
+
+        .confirm-btns {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* ═══════════════════════════════
+   LOGIN
+═══════════════════════════════ */
+        #login-screen {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 700;
+            background: radial-gradient(ellipse at 50% 30%, #1e103e 0%, #09080f 60%);
+            align-items: center;
+            justify-content: center;
+        }
+
+        #login-screen.open {
+            display: flex;
+        }
+
+        .login-box {
+            background: var(--card);
+            border: 1px solid rgba(168, 126, 255, .25);
+            padding: 52px 48px;
+            width: 100%;
+            max-width: 400px;
+            animation: modalIn .35s ease;
+            position: relative;
+            box-shadow: 0 32px 100px rgba(92, 48, 204, .3);
+        }
+
+        .login-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--p3), var(--p2), transparent);
+        }
+
+        .login-gem {
+            font-size: 2.6rem;
+            text-align: center;
+            margin-bottom: 16px;
+            animation: gemPulse 2.5s ease-in-out infinite;
+        }
+
+        @keyframes gemPulse {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 10px rgba(168, 126, 255, .4));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 26px rgba(168, 126, 255, .9));
+            }
+        }
+
+        .login-title {
+            font-family: var(--ff);
+            font-size: 2rem;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .login-title em {
+            background: linear-gradient(135deg, var(--p2), var(--ac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+        }
+
+        .login-sub {
+            text-align: center;
+            font-size: .6rem;
+            letter-spacing: .24em;
+            text-transform: uppercase;
+            color: var(--tx3);
+            margin-bottom: 34px;
+        }
+
+        .login-field {
+            margin-bottom: 13px;
+        }
+
+        .login-label {
+            font-size: .57rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--tx3);
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .login-err {
+            color: var(--red);
+            font-size: .72rem;
+            text-align: center;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .login-close {
+            width: 100%;
+            margin-top: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .65rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--tx3);
+            transition: color .2s;
+        }
+
+        .login-close:hover {
+            color: var(--tx);
+        }
+
+        /* ═══════════════════════════════
+   ADMIN PANEL
+═══════════════════════════════ */
+        #admin {
+            display: none;
+            min-height: 100vh;
+            background: #07060e;
+        }
+
+        .admin-nav {
+            position: sticky;
+            top: 0;
+            z-index: 300;
+            background: rgba(7, 6, 14, .96);
+            backdrop-filter: blur(22px);
+            border-bottom: 1px solid rgba(168, 126, 255, .12);
+            padding: 0 36px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .admin-brand {
+            font-family: var(--ff);
+            font-size: 1.3rem;
+            color: var(--p2);
+            letter-spacing: .08em;
+        }
+
+        .admin-nav-r {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .adm-btn {
+            background: none;
+            border: 1px solid rgba(168, 126, 255, .22);
+            color: var(--tx3);
+            padding: 7px 16px;
+            font-size: .6rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all .22s;
+        }
+
+        .adm-btn:hover {
+            border-color: var(--p2);
+            color: var(--p2);
+        }
+
+        .adm-btn.primary {
+            background: linear-gradient(135deg, var(--p3), var(--p1));
+            border: none;
+            color: #fff;
+        }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 228px 1fr;
+            min-height: calc(100vh - 64px);
+        }
+
+        .admin-sidebar {
+            background: #0c0b18;
+            border-right: 1px solid rgba(168, 126, 255, .1);
+            padding: 24px 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-group-label {
+            font-size: .5rem;
+            letter-spacing: .32em;
+            text-transform: uppercase;
+            color: rgba(168, 126, 255, .3);
+            padding: 0 20px;
+            margin: 14px 0 7px;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: .75rem;
+            letter-spacing: .06em;
+            color: var(--tx3);
+            transition: all .22s;
+            border-left: 2px solid transparent;
+        }
+
+        .sidebar-item:hover {
+            color: var(--p2);
+            background: rgba(168, 126, 255, .06);
+        }
+
+        .sidebar-item.active {
+            color: var(--p2);
+            border-left-color: var(--p1);
+            background: rgba(168, 126, 255, .09);
+        }
+
+        .sidebar-icon {
+            width: 20px;
+            text-align: center;
+            font-size: .92rem;
+        }
+
+        .admin-content {
+            padding: 36px;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #0a0918, #0d0c20);
+        }
+
+        .admin-page {
+            display: none;
+        }
+
+        .admin-page.active {
+            display: block;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            font-family: var(--ff);
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .page-title em {
+            background: linear-gradient(135deg, var(--p2), var(--ac));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-style: italic;
+        }
+
+        /* Dashboard stats */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--bdr);
+            padding: 22px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+        }
+
+        .stat-card.c1::before {
+            background: linear-gradient(90deg, var(--p3), var(--p2));
+        }
+
+        .stat-card.c2::before {
+            background: linear-gradient(90deg, #8a6020, var(--gd));
+        }
+
+        .stat-card.c3::before {
+            background: linear-gradient(90deg, #1a5a3a, var(--grn));
+        }
+
+        .stat-card.c4::before {
+            background: linear-gradient(90deg, #1a3a6e, var(--blu));
+        }
+
+        .stat-icon {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .stat-num {
+            font-family: var(--ff);
+            font-size: 2.2rem;
+            font-weight: 300;
+            color: var(--tx);
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: .6rem;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--tx3);
+        }
+
+        .stat-delta {
+            font-size: .66rem;
+            margin-top: 6px;
+            color: var(--tx3);
+        }
+
+        .stat-delta.up {
+            color: var(--grn);
+        }
+
+        /* Charts */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 1.6fr 1fr;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .chart-card {
+            background: var(--card);
+            border: 1px solid var(--bdr);
+            padding: 22px;
+        }
+
+        .chart-card h3 {
+            font-size: .58rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--tx3);
+            margin-bottom: 16px;
+        }
+
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            height: 112px;
+        }
+
+        .bar-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .bar-fill {
+            width: 100%;
+            background: rgba(168, 126, 255, .15);
+            border-radius: 2px 2px 0 0;
+            transition: background .2s;
+            cursor: pointer;
+        }
+
+        .bar-fill:hover {
+            background: linear-gradient(180deg, var(--p2), var(--p1));
+        }
+
+        .bar-label {
+            font-size: .52rem;
+            color: var(--tx3);
+        }
+
+        .donut-wrap {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .donut-svg {
+            width: 108px;
+            height: 108px;
+            flex-shrink: 0;
+        }
+
+        .donut-legend .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-bottom: 8px;
+            font-size: .7rem;
+            color: var(--tx2);
+        }
+
+        .legend-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Tables */
+        .table-card {
+            background: var(--card);
+            border: 1px solid var(--bdr);
+            padding: 22px;
+            margin-bottom: 16px;
+        }
+
+        .table-card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .table-card-head h3 {
+            font-size: .6rem;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: var(--tx3);
+        }
+
+        .search-wrap input {
+            padding: 8px 13px;
+            border: 1px solid rgba(168, 126, 255, .2);
+            background: rgba(168, 126, 255, .06);
+            color: var(--tx);
+            font-family: var(--ffb);
+            font-size: .74rem;
+            outline: none;
+            width: 200px;
+        }
+
+        .search-wrap input::placeholder {
+            color: var(--tx3);
+        }
+
+        .search-wrap input:focus {
+            border-color: var(--p1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            font-size: .56rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--tx3);
+            padding: 9px 11px;
+            text-align: left;
+            border-bottom: 1px solid rgba(168, 126, 255, .1);
+        }
+
+        td {
+            font-size: .76rem;
+            padding: 11px 11px;
+            border-bottom: 1px solid rgba(168, 126, 255, .05);
+            color: var(--tx2);
+            vertical-align: middle;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background: rgba(168, 126, 255, .04);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 9px;
+            font-size: .56rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .status-badge.pending {
+            background: rgba(240, 208, 112, .1);
+            color: var(--gd);
+        }
+
+        .status-badge.confirmed {
+            background: rgba(92, 204, 160, .1);
+            color: var(--grn);
+        }
+
+        .status-badge.delivered {
+            background: rgba(96, 160, 232, .1);
+            color: var(--blu);
+        }
+
+        .status-badge.cancelled {
+            background: rgba(212, 96, 106, .1);
+            color: var(--red);
+        }
+
+        .status-badge.instock {
+            background: rgba(92, 204, 160, .1);
+            color: var(--grn);
+        }
+
+        .status-badge.outstock {
+            background: rgba(212, 96, 106, .1);
+            color: var(--red);
+        }
+
+        .t-btn {
+            background: none;
+            border: 1px solid rgba(168, 126, 255, .18);
+            color: var(--tx3);
+            padding: 3px 9px;
+            font-size: .56rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: var(--ffb);
+            transition: all .2s;
+            margin-right: 3px;
+        }
+
+        .t-btn:hover {
+            border-color: var(--p2);
+            color: var(--p2);
+        }
+
+        .t-btn.danger:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .t-btn.success:hover {
+            border-color: var(--grn);
+            color: var(--grn);
+        }
+
+        .t-thumb {
+            width: 40px;
+            height: 50px;
+            object-fit: cover;
+            filter: saturate(.55) brightness(.78);
+        }
+
+        /* Admin Forms */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group.full {
+            grid-column: 1/-1;
+        }
+
+        .form-label {
+            font-size: .57rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--tx3);
+        }
+
+        .form-field {
+            padding: 10px 13px;
+            border: 1px solid rgba(168, 126, 255, .2);
+            background: rgba(168, 126, 255, .05);
+            color: var(--tx);
+            font-family: var(--ffb);
+            font-size: .8rem;
+            outline: none;
+            transition: border-color .25s;
+            width: 100%;
+        }
+
+        .form-field:focus {
+            border-color: var(--p1);
+        }
+
+        .form-field option {
+            background: #1a163a;
+        }
+
+        textarea.form-field {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        /* Image slots */
+        .img-slot {
+            cursor: pointer;
+        }
+
+        .img-slot-inner {
+            border: 1px dashed rgba(168, 126, 255, .28);
+            background: rgba(168, 126, 255, .05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            transition: all .22s;
+        }
+
+        .img-slot:hover .img-slot-inner {
+            border-color: var(--p1);
+            background: rgba(168, 126, 255, .1);
+        }
+
+        .img-slot.portrait .img-slot-inner {
+            aspect-ratio: 3/4;
+        }
+
+        .img-slot.square .img-slot-inner {
+            aspect-ratio: 1;
+        }
+
+        .img-slot-inner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: saturate(.6) brightness(.8);
+        }
+
+        .img-slot-ph {
+            text-align: center;
+            font-size: 1.4rem;
+            color: var(--tx3);
+            line-height: 1.7;
+            padding: 12px;
+        }
+
+        .img-slot-ph span {
+            display: block;
+            font-size: .68rem;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--tx3);
+            margin-top: 4px;
+        }
+
+        .img-slot-ph small {
+            font-size: .58rem;
+            color: rgba(168, 126, 255, .4);
+        }
+
+        .img-del-btn {
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            background: rgba(0, 0, 0, .7);
+            color: #fff;
+            border: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: .7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity .22s;
+            z-index: 2;
+        }
+
+        .img-slot:hover .img-del-btn {
+            opacity: 1;
+        }
+
+        /* Theme presets */
+        .theme-presets-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .theme-preset {
+            cursor: pointer;
+            border: 2px solid transparent;
+            padding: 13px;
+            background: var(--bg3);
+            transition: all .22s;
+            text-align: center;
+        }
+
+        .theme-preset:hover,
+        .theme-preset.active {
+            border-color: var(--p2);
+        }
+
+        .theme-swatch {
+            height: 38px;
+            border-radius: 2px;
+            margin-bottom: 8px;
+        }
+
+        .theme-preset-name {
+            font-size: .6rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--tx3);
+        }
+
+        .font-presets-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+
+        .font-preset {
+            cursor: pointer;
+            border: 1px solid var(--bdr);
+            padding: 15px;
+            background: var(--bg3);
+            text-align: center;
+            transition: all .22s;
+        }
+
+        .font-preset:hover,
+        .font-preset.active {
+            border-color: var(--p2);
+            background: rgba(168, 126, 255, .06);
+        }
+
+        .font-preview {
+            font-size: 1.4rem;
+            font-weight: 300;
+            margin-bottom: 5px;
+            color: var(--tx);
+        }
+
+        .font-name {
+            font-size: .58rem;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--tx3);
+        }
+
+        /* Color pickers */
+        .color-row {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+        }
+
+        .color-swatch {
+            width: 46px;
+            height: 38px;
+            border: 1px solid var(--bdr);
+            background: none;
+            cursor: pointer;
+            padding: 2px;
+        }
+
+        /* Live preview */
+        .live-preview {
+            border: 1px solid var(--bdr);
+            padding: 24px;
+            transition: background .3s;
+            margin-top: 20px;
+        }
+
+        /* Content editor sections */
+        .editor-section {
+            border: 1px solid var(--bdr);
+            margin-bottom: 14px;
+        }
+
+        .editor-section-hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 18px;
+            background: rgba(168, 126, 255, .07);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .editor-section-hdr h4 {
+            font-size: .62rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--p2);
+        }
+
+        .editor-toggle {
+            color: var(--tx3);
+            transition: transform .3s;
+        }
+
+        .editor-section-hdr.open .editor-toggle {
+            transform: rotate(180deg);
+        }
+
+        .editor-body {
+            padding: 18px;
+            display: none;
+        }
+
+        .editor-body.open {
+            display: block;
+        }
+
+        .editor-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+            margin-bottom: 13px;
+        }
+
+        .editor-row.full {
+            grid-template-columns: 1fr;
+        }
+
+        /* Responsive */
+        @media(max-width:1100px) {
+
+            nav,
+            .section,
+            .ramadan,
+            .features,
+            .ig-section,
+            footer {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-right {
+                height: 55vw;
+            }
+
+            .hero-left {
+                padding: 56px 24px;
+            }
+
+            #products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .features {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .testi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .ig-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+
+            .ramadan {
+                margin: 0 24px 96px;
+                padding: 48px 36px;
+                flex-direction: column;
+            }
+
+            .stats-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="cvs"></canvas>
+
+    <!-- ════════════════════════════
+     LOGIN SCREEN
+════════════════════════════ -->
+    <div id="login-screen">
+        <div class="login-box">
+            <div class="login-gem">💎</div>
+            <div class="login-title">Magic <em>Chic</em></div>
+            <div class="login-sub">Espace Administration</div>
+            <div class="login-field">
+                <label class="login-label">Identifiant</label>
+                <input class="form-input" type="text" id="l-user" placeholder="admin" autocomplete="off">
+            </div>
+            <div class="login-field">
+                <label class="login-label">Mot de passe</label>
+                <input class="form-input" type="password" id="l-pass" placeholder="••••••••"
+                    onkeydown="if(event.key==='Enter')doLogin()">
+            </div>
+            <div id="l-err" class="login-err">Identifiant ou mot de passe incorrect.</div>
+            <button class="btn-fill" style="width:100%;margin-top:22px;text-align:center;padding:14px"
+                onclick="doLogin()"><span>✦ Entrer</span></button>
+            <button class="login-close" onclick="closeLogin()">Fermer</button>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════
+     STORE
+════════════════════════════ -->
+    <div id="store">
+
+        <nav id="main-nav">
+            <a id="logo-el" class="nav-logo" href="#" onclick="return false">Magic <em>Chic</em></a>
+            <ul class="nav-links">
+                <li><a href="#section-col" id="nl-col">Collection</a></li>
+                <li><a href="#section-ram" id="nl-ram">Ramadan</a></li>
+                <li><a href="#section-avis" id="nl-avis">Avis</a></li>
+                <li><a href="#section-ig" id="nl-ig">Instagram</a></li>
+            </ul>
+            <div class="nav-r">
+                <div class="cart-wrap" onclick="openCart()">
+                    <button>🛍️</button>
+                    <span class="cart-num" id="cart-num">0</span>
+                </div>
+                <button class="cta-btn"
+                    onclick="document.getElementById('section-col').scrollIntoView({behavior:'smooth'})"><span
+                        id="nav-cta-lbl">Commander</span></button>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-left">
+                <div class="orb orb-a"></div>
+                <div class="orb orb-b"></div>
+                <div class="hero-eyebrow" id="hero-eyebrow">Boutique en ligne • Maroc</div>
+                <h1 class="hero-h1" id="hero-title">
+                    <span id="h1-line1">L'élégance</span><br>
+                    <span id="h1-line2">au féminin,</span><br>
+                    <em id="h1-em">redéfinie.</em>
+                </h1>
+                <p class="hero-body" id="hero-desc">Des tenues soigneusement sélectionnées pour la femme moderne.
+                    Livraison partout au Maroc, paiement cash à la livraison.</p>
+                <div class="hero-btns">
+                    <a href="#section-col" class="btn-fill" id="hero-btn1"><span>Découvrir la collection</span></a>
+                    <a href="#section-ram" class="btn-ghost" id="hero-btn2">Collection Ramadan ❤️🌙</a>
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <div class="stat-val" id="stat1-val">15.3K</div>
+                        <div class="stat-lbl" id="stat1-lbl">Abonnées</div>
+                    </div>
+                    <div>
+                        <div class="stat-val" id="stat2-val">0</div>
+                        <div class="stat-lbl">Modèles</div>
+                    </div>
+                    <div>
+                        <div class="stat-val" id="stat3-val">100%</div>
+                        <div class="stat-lbl" id="stat3-lbl">Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-mosaic">
+                    <div class="mosaic-img big"><img id="hero-img-0"
+                            src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=800&q=80" alt=""></div>
+                    <div class="mosaic-img"><img id="hero-img-1"
+                            src="https://images.unsplash.com/photo-1625750331870-624de6fd3452?w=600&q=80" alt="">
+                        <div class="price-chip" id="hero-price-1">199 Dh</div>
+                    </div>
+                    <div class="mosaic-img"><img id="hero-img-2"
+                            src="https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=600&q=80" alt="">
+                        <div class="price-chip" id="hero-price-2">149 Dh</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MARQUEE -->
+        <div class="marquee">
+            <div class="marquee-track" id="marquee-track"></div>
+        </div>
+
+        <!-- COLLECTION -->
+        <section class="section" id="section-col">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-label" id="col-label">Notre sélection</div>
+                    <h2 class="section-title"><span id="col-t1">Collection </span><em id="col-t2">printemps</em><span
+                            id="col-t3"> 2026</span></h2>
+                </div>
+                <a href="#" class="see-all">Voir tout →</a>
+            </div>
+            <div id="products-grid"></div>
+        </section>
+
+        <!-- RAMADAN -->
+        <div class="ramadan reveal" id="section-ram">
+            <div class="ramadan-glow"></div>
+            <div class="ramadan-arabic">رمضان</div>
+            <div style="position:relative;z-index:1">
+                <div class="ramadan-tag" id="ram-tag">Édition spéciale</div>
+                <h2 id="ram-title">Collection<br>Ramadan 2026<br>❤️🌙</h2>
+                <p id="ram-desc">Des tenues spécialement sélectionnées pour le mois sacré.</p>
+                <button class="btn-gold"
+                    onclick="openModal('Collection Ramadan','149–199 Dh','Découvrez notre sélection complète de tenues pour le Ramadan 2026.')">Commander
+                    maintenant</button>
+            </div>
+            <div class="ram-cards">
+                <div class="ram-card shimmer">
+                    <div class="ram-price"><span id="rcard1-price">149</span><span style="font-size:.9rem">Dh</span>
+                    </div>
+                    <div class="ram-name" id="rcard1-name">Abaya Ramadan</div>
+                </div>
+                <div class="ram-card shimmer">
+                    <div class="ram-price"><span id="rcard2-price">199</span><span style="font-size:.9rem">Dh</span>
+                    </div>
+                    <div class="ram-name" id="rcard2-name">Ensemble Soirée</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FEATURES -->
+        <div class="features">
+            <div class="feature reveal"><span class="feature-icon" id="feat1-icon">🚚</span>
+                <div class="feature-title" id="feat1-title">Livraison nationale</div>
+                <div class="feature-desc" id="feat1-desc">Livraison partout au Maroc, rapide et fiable.</div>
+            </div>
+            <div class="feature reveal"><span class="feature-icon" id="feat2-icon">💵</span>
+                <div class="feature-title" id="feat2-title">Paiement à la livraison</div>
+                <div class="feature-desc" id="feat2-desc">Cash à la réception — sans risque, sans avance.</div>
+            </div>
+            <div class="feature reveal"><span class="feature-icon" id="feat3-icon">✨</span>
+                <div class="feature-title" id="feat3-title">Qualité garantie</div>
+                <div class="feature-desc" id="feat3-desc">Tissus soigneusement sélectionnés, coupes élégantes.</div>
+            </div>
+            <div class="feature reveal"><span class="feature-icon" id="feat4-icon">💬</span>
+                <div class="feature-title" id="feat4-title">Service client</div>
+                <div class="feature-desc" id="feat4-desc">Disponible sur WhatsApp & Instagram 7j/7.</div>
+            </div>
+        </div>
+
+        <!-- TESTIMONIALS -->
+        <section class="section" id="section-avis">
+            <div class="section-head reveal">
+                <div>
+                    <div class="section-label" id="testi-label">Nos clientes témoignent</div>
+                    <h2 class="section-title">Avis <em id="testi-title-em">clients</em></h2>
+                </div>
+            </div>
+            <div class="testi-grid" id="testi-grid"></div>
+        </section>
+
+        <!-- INSTAGRAM -->
+        <section class="ig-section reveal" id="section-ig">
+            <div class="section-head">
+                <div>
+                    <div class="section-label" id="ig-label">Suivez-nous</div>
+                    <h2 class="section-title">Sur <em>Instagram</em></h2>
+                </div>
+                <a href="#" class="see-all" id="ig-link-el">@magic__chic_ →</a>
+            </div>
+            <div class="ig-grid" id="ig-grid"></div>
+            <div class="ig-handle">Suivez-nous : <a href="#" id="ig-handle-link">@magic__chic_</a></div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-grid">
+                <div>
+                    <span class="footer-brand-name">Magic <em>Chic</em></span>
+                    <p class="footer-desc" id="footer-desc">Boutique en ligne de mode féminine au Maroc.</p>
+                    <div class="footer-social">
+                        <a class="soc-btn" href="#" target="_blank" id="footer-ig-link">📸</a>
+                        <a class="soc-btn" href="#" id="footer-wa-link">💬</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 id="fcol1-head">Collections</h4>
+                    <ul id="fcol1-list"></ul>
+                </div>
+                <div class="footer-col">
+                    <h4 id="fcol2-head">Informations</h4>
+                    <ul id="fcol2-list"></ul>
+                </div>
+                <div class="footer-col">
+                    <h4 id="fcol3-head">Contact</h4>
+                    <ul id="fcol3-list"></ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p id="footer-copy">© 2026 Magic Chic. Tous droits réservés.</p>
+                <p>✦ Fait avec ❤️ au Maroc</p>
+            </div>
+        </footer>
+
+        <a class="wa-fab" href="#" target="_blank" id="wa-fab">💬</a>
+
+    </div><!-- /store -->
+
+    <!-- ORDER MODAL -->
+    <div class="modal-backdrop" id="order-modal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-title" id="m-title"></div>
+            <div class="modal-price" id="m-price"></div>
+            <p class="modal-desc" id="m-desc"></p>
+            <div class="modal-tags"><span class="modal-tag">Livraison 2–4 jours</span><span class="modal-tag">Cash à la
+                    livraison</span></div>
+            <input class="form-input" type="text" id="o-name" placeholder="Votre nom complet">
+            <input class="form-input" type="tel" id="o-tel" placeholder="Votre numéro">
+            <input class="form-input" type="text" id="o-city" placeholder="Votre ville">
+            <button class="btn-fill" style="width:100%;text-align:center;padding:13px;margin-top:6px"
+                onclick="sendOrder()"><span>Confirmer via WhatsApp 💬</span></button>
+        </div>
+    </div>
+
+    <!-- CART MODAL -->
+    <div class="modal-backdrop" id="cart-modal">
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeCart()">✕</button>
+            <div class="modal-title" style="margin-bottom:18px">Mon Panier 🛍️</div>
+            <div id="cart-items"></div>
+            <div id="cart-total"
+                style="font-family:var(--ff);font-size:1.3rem;background:linear-gradient(135deg,var(--p2),var(--ac));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:16px 0;text-align:right">
+            </div>
+            <button class="btn-fill" id="cart-checkout-btn"
+                style="width:100%;text-align:center;padding:13px;display:none" onclick="checkoutCart()"><span>Commander
+                    via WhatsApp 💬</span></button>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════
+     ADMIN PANEL
+════════════════════════════ -->
+    <div id="admin">
+        <div class="admin-nav">
+            <div class="admin-brand">Magic Chic ✦ Admin</div>
+            <div class="admin-nav-r">
+                <span style="font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3)">✦
+                    Admin</span>
+                <button class="adm-btn primary" onclick="goStore()">🛍️ Boutique</button>
+                <button class="adm-btn" onclick="doLogout()">Déconnexion</button>
+            </div>
+        </div>
+        <div class="admin-layout">
+
+            <!-- SIDEBAR -->
+            <div class="admin-sidebar">
+                <div class="sidebar-group-label">Principal</div>
+                <div class="sidebar-item active" onclick="showPage('dashboard',this)"><span
+                        class="sidebar-icon">📊</span>Tableau de bord</div>
+                <div class="sidebar-item" onclick="showPage('orders',this)"><span
+                        class="sidebar-icon">📦</span>Commandes</div>
+                <div class="sidebar-group-label">Catalogue</div>
+                <div class="sidebar-item" onclick="showPage('products',this)"><span
+                        class="sidebar-icon">👗</span>Produits</div>
+                <div class="sidebar-item" onclick="showPage('add-product',this)"><span
+                        class="sidebar-icon">➕</span>Ajouter produit</div>
+                <div class="sidebar-group-label">✨ Apparence</div>
+                <div class="sidebar-item" onclick="showPage('images',this)"><span class="sidebar-icon">🖼️</span>Images
+                </div>
+                <div class="sidebar-item" onclick="showPage('theme',this)"><span class="sidebar-icon">🎨</span>Thème &
+                    couleurs</div>
+                <div class="sidebar-item" onclick="showPage('content',this)"><span class="sidebar-icon">✏️</span>Textes
+                    & contenu</div>
+                <div class="sidebar-group-label">Paramètres</div>
+                <div class="sidebar-item" onclick="showPage('settings',this)"><span
+                        class="sidebar-icon">⚙️</span>Paramètres</div>
+            </div>
+
+            <!-- CONTENT AREA -->
+            <div class="admin-content">
+
+                <!-- ── DASHBOARD ── -->
+                <div class="admin-page active" id="page-dashboard">
+                    <div class="page-header">
+                        <h2 class="page-title">Tableau de <em>bord</em></h2>
+                        <span style="font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3)"
+                            id="dash-date"></span>
+                    </div>
+                    <div class="stats-row">
+                        <div class="stat-card c1"><span class="stat-icon">📦</span>
+                            <div class="stat-num" id="s-orders">0</div>
+                            <div class="stat-label">Commandes</div>
+                            <div class="stat-delta up" id="s-orders-d"></div>
+                        </div>
+                        <div class="stat-card c2"><span class="stat-icon">💰</span>
+                            <div class="stat-num" id="s-revenue">0</div>
+                            <div class="stat-label">Chiffre d'affaires</div>
+                            <div class="stat-delta up" id="s-revenue-d"></div>
+                        </div>
+                        <div class="stat-card c3"><span class="stat-icon">👗</span>
+                            <div class="stat-num" id="s-prods">0</div>
+                            <div class="stat-label">Produits actifs</div>
+                            <div class="stat-delta" id="s-prods-d"></div>
+                        </div>
+                        <div class="stat-card c4"><span class="stat-icon">⏳</span>
+                            <div class="stat-num" id="s-pending">0</div>
+                            <div class="stat-label">En attente</div>
+                            <div class="stat-delta" id="s-pending-d"></div>
+                        </div>
+                    </div>
+                    <div class="charts-row">
+                        <div class="chart-card">
+                            <h3>Commandes — 7 derniers jours</h3>
+                            <div class="bar-chart" id="bar-chart"></div>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Statut commandes</h3>
+                            <div class="donut-wrap"><svg class="donut-svg" viewBox="0 0 120 120" id="donut-svg"></svg>
+                                <div class="donut-legend" id="donut-legend"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-card">
+                        <div class="table-card-head">
+                            <h3>Dernières commandes</h3>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Client</th>
+                                    <th>Produit</th>
+                                    <th>Ville</th>
+                                    <th>Prix</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody id="dash-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ── ORDERS ── -->
+                <div class="admin-page" id="page-orders">
+                    <div class="page-header">
+                        <h2 class="page-title"><em>Commandes</em></h2>
+                        <div class="search-wrap"><input type="text" placeholder="Rechercher..."
+                                oninput="filterOrders(this.value)" id="orders-search"></div>
+                    </div>
+                    <div class="table-card">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date</th>
+                                    <th>Client</th>
+                                    <th>Tél</th>
+                                    <th>Produit</th>
+                                    <th>Ville</th>
+                                    <th>Prix</th>
+                                    <th>Statut</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ── PRODUCTS ── -->
+                <div class="admin-page" id="page-products">
+                    <div class="page-header">
+                        <h2 class="page-title"><em>Produits</em></h2>
+                        <button class="btn-fill"
+                            onclick="showPage('add-product',document.querySelectorAll('.sidebar-item')[3])"><span>+
+                                Ajouter</span></button>
+                    </div>
+                    <div class="table-card">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Nom</th>
+                                    <th>Catégorie</th>
+                                    <th>Prix</th>
+                                    <th>Stock</th>
+                                    <th>Badge</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ── ADD PRODUCT ── -->
+                <div class="admin-page" id="page-add-product">
+                    <div class="page-header">
+                        <h2 class="page-title" id="prod-form-title">Ajouter un <em>produit</em></h2>
+                    </div>
+                    <div class="table-card" style="max-width:720px">
+                        <div class="form-grid">
+                            <div class="form-group"><label class="form-label">Nom du produit</label><input
+                                    class="form-field" type="text" id="fp-name" placeholder="Ex: Abaya Élégante"></div>
+                            <div class="form-group"><label class="form-label">Prix (Dh)</label><input class="form-field"
+                                    type="number" id="fp-price" placeholder="199"></div>
+                            <div class="form-group"><label class="form-label">Catégorie</label>
+                                <select class="form-field" id="fp-cat">
+                                    <option>Abaya</option>
+                                    <option>Robe</option>
+                                    <option>Ensemble</option>
+                                    <option>Ramadan</option>
+                                    <option>Autre</option>
+                                </select>
+                            </div>
+                            <div class="form-group"><label class="form-label">Badge</label>
+                                <select class="form-field" id="fp-badge">
+                                    <option value="">Aucun</option>
+                                    <option>Nouveau</option>
+                                    <option>Populaire</option>
+                                    <option>Ramadan ❤️🌙</option>
+                                    <option>Solde</option>
+                                </select>
+                            </div>
+                            <div class="form-group full">
+                                <label class="form-label">Images <span style="color:var(--tx3);font-size:.55rem">(max 9
+                                        — cliquer pour choisir la principale)</span></label>
+                                <div id="img-upload-zone" onclick="document.getElementById('img-upload-input').click()"
+                                    style="border:1px dashed rgba(168,126,255,.28);padding:28px;text-align:center;cursor:pointer;background:rgba(168,126,255,.04);margin-bottom:11px;transition:all .25s"
+                                    onmouseover="this.style.borderColor='var(--p1)'"
+                                    onmouseout="this.style.borderColor='rgba(168,126,255,.28)'">
+                                    <div
+                                        style="font-size:1.9rem;margin-bottom:8px;filter:drop-shadow(0 0 10px rgba(168,126,255,.4))">
+                                        💎</div>
+                                    <div style="font-size:.72rem;color:var(--tx3);letter-spacing:.1em">Cliquez pour
+                                        choisir vos photos</div>
+                                    <div style="font-size:.6rem;color:rgba(168,126,255,.38);margin-top:3px">JPG PNG WEBP
+                                        — max 9</div>
+                                </div>
+                                <input type="file" id="img-upload-input" accept="image/*" multiple style="display:none"
+                                    onchange="handleProductImages(this)">
+                                <div id="img-gallery" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+                                </div>
+                                <input type="hidden" id="fp-img"><input type="hidden" id="fp-imgs-all">
+                            </div>
+                            <div class="form-group full"><label class="form-label">Description</label><textarea
+                                    class="form-field" id="fp-desc" placeholder="Description..."></textarea></div>
+                            <div class="form-group"><label class="form-label">Stock</label><select class="form-field"
+                                    id="fp-stock">
+                                    <option value="instock">En stock</option>
+                                    <option value="outstock">Rupture</option>
+                                </select></div>
+                            <div class="form-group"><label class="form-label">Visible</label><select class="form-field"
+                                    id="fp-visible">
+                                    <option value="1">Oui</option>
+                                    <option value="0">Non</option>
+                                </select></div>
+                        </div>
+                        <input type="hidden" id="fp-edit-id">
+                        <div class="form-actions">
+                            <button class="btn-fill" onclick="saveProduct()"><span>✦ Enregistrer</span></button>
+                            <button class="btn-ghost" onclick="resetProductForm()">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── IMAGES ── -->
+                <div class="admin-page" id="page-images">
+                    <div class="page-header">
+                        <h2 class="page-title">Images <em>boutique</em></h2>
+                    </div>
+
+                    <div class="table-card" style="margin-bottom:18px">
+                        <h3
+                            style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px">
+                            Images Hero</h3>
+                        <p style="font-size:.73rem;color:var(--tx3);margin-bottom:18px;line-height:1.7">3 photos pour la
+                            page d'accueil. La 1ère est grande, les 2 autres affichent un prix.</p>
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px">
+                            <div class="img-slot portrait" onclick="triggerHeroSlot(0)">
+                                <div class="img-slot-inner" id="hslot-0">
+                                    <div class="img-slot-ph">🖼️<span>Image principale</span><small>Grande photo</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="img-slot portrait" onclick="triggerHeroSlot(1)">
+                                <div class="img-slot-inner" id="hslot-1">
+                                    <div class="img-slot-ph">🖼️<span>Image 2</span><small>Prix affiché</small></div>
+                                </div>
+                            </div>
+                            <div class="img-slot portrait" onclick="triggerHeroSlot(2)">
+                                <div class="img-slot-inner" id="hslot-2">
+                                    <div class="img-slot-ph">🖼️<span>Image 3</span><small>Prix affiché</small></div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="file" id="hero-slot-input" accept="image/*" style="display:none"
+                            onchange="handleHeroSlotUpload(this)">
+                        <div class="form-actions">
+                            <button class="btn-fill" onclick="applyHeroImages()"><span>✦ Appliquer</span></button>
+                            <button class="btn-ghost" onclick="resetHeroImages()">Réinitialiser</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card">
+                        <h3
+                            style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px">
+                            Photos Instagram</h3>
+                        <p style="font-size:.73rem;color:var(--tx3);margin-bottom:18px;line-height:1.7">5 photos pour la
+                            section Instagram.</p>
+                        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:14px">
+                            <div class="img-slot square" onclick="triggerIgSlot(0)">
+                                <div class="img-slot-inner" id="iglot-0">
+                                    <div class="img-slot-ph">📷<small>Photo 1</small></div>
+                                </div>
+                            </div>
+                            <div class="img-slot square" onclick="triggerIgSlot(1)">
+                                <div class="img-slot-inner" id="iglot-1">
+                                    <div class="img-slot-ph">📷<small>Photo 2</small></div>
+                                </div>
+                            </div>
+                            <div class="img-slot square" onclick="triggerIgSlot(2)">
+                                <div class="img-slot-inner" id="iglot-2">
+                                    <div class="img-slot-ph">📷<small>Photo 3</small></div>
+                                </div>
+                            </div>
+                            <div class="img-slot square" onclick="triggerIgSlot(3)">
+                                <div class="img-slot-inner" id="iglot-3">
+                                    <div class="img-slot-ph">📷<small>Photo 4</small></div>
+                                </div>
+                            </div>
+                            <div class="img-slot square" onclick="triggerIgSlot(4)">
+                                <div class="img-slot-inner" id="iglot-4">
+                                    <div class="img-slot-ph">📷<small>Photo 5</small></div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="file" id="ig-slot-input" accept="image/*" style="display:none"
+                            onchange="handleIgSlotUpload(this)">
+                        <div class="form-actions">
+                            <button class="btn-fill" onclick="applyIgImages()"><span>✦ Appliquer</span></button>
+                            <button class="btn-ghost" onclick="resetIgImages()">Réinitialiser</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ── THEME ── -->
+                <div class="admin-page" id="page-theme">
+                    <div class="page-header">
+                        <h2 class="page-title">Thème & <em>couleurs</em></h2>
+                    </div>
+
+                    <div class="table-card" style="margin-bottom:18px">
+                        <h3
+                            style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:14px">
+                            Thèmes prédéfinis</h3>
+                        <div class="theme-presets-grid" id="theme-presets-grid"></div>
+                    </div>
+
+                    <div class="table-card" style="margin-bottom:18px">
+                        <h3
+                            style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:18px">
+                            Couleurs personnalisées</h3>
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+                            <div class="form-group"><label class="form-label">Couleur principale</label>
+                                <div class="color-row"><input type="color" class="color-swatch" id="tc-p1"
+                                        oninput="syncColorHex('tc-p1','th-p1')"><input class="form-field" type="text"
+                                        id="th-p1" style="flex:1" oninput="syncColorSwatch('tc-p1','th-p1')"></div>
+                            </div>
+                            <div class="form-group"><label class="form-label">Couleur secondaire</label>
+                                <div class="color-row"><input type="color" class="color-swatch" id="tc-p2"
+                                        oninput="syncColorHex('tc-p2','th-p2')"><input class="form-field" type="text"
+                                        id="th-p2" style="flex:1" oninput="syncColorSwatch('tc-p2','th-p2')"></div>
+                            </div>
+                            <div class="form-group"><label class="form-label">Couleur accent</label>
+                                <div class="color-row"><input type="color" class="color-swatch" id="tc-ac"
+                                        oninput="syncColorHex('tc-ac','th-ac')"><input class="form-field" type="text"
+                                        id="th-ac" style="flex:1" oninput="syncColorSwatch('tc-ac','th-ac')"></div>
+                            </div>
+                            <div class="form-group"><label class="form-label">Fond principal</label>
+                                <div class="color-row"><input type="color" class="color-swatch" id="tc-bg"
+                                        oninput="syncColorHex('tc-bg','th-bg')"><input class="form-field" type="text"
+                                        id="th-bg" style="flex:1" oninput="syncColorSwatch('tc-bg','th-bg')"></div>
+                            </div>
+                            <div class="form-group"><label class="form-label">Fond cartes</label>
+                                <div class="color-row"><input type="color" class="color-swatch" id="tc-card"
+                                        oninput="syncColorHex('tc-card','th-card')"><input class="form-field"
+                                        type="text" id="th-card" style="flex:1"
+                                        oninput="syncColorSwatch('tc-card','th-card')"></div>
+                            </div>
+                            <div class="form-group"><label class="form-label">Texte principal</label>
+                                <div class="color-row"><input type="color" class="color-swatch" id="tc-tx"
+                                        oninput="syncColorHex('tc-tx','th-tx')"><input class="form-field" type="text"
+                                        id="th-tx" style="flex:1" oninput="syncColorSwatch('tc-tx','th-tx')"></div>
+                            </div>
+                        </div>
+                        <!-- Live preview -->
+                        <div style="margin-top:22px"><label class="form-label"
+                                style="display:block;margin-bottom:12px">Aperçu en direct</label>
+                            <div class="live-preview" id="live-preview">
+                                <div
+                                    style="display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(200,170,255,.1)">
+                                    <span id="pv-logo" style="font-family:var(--ff);font-size:1.25rem">Magic <em
+                                            style="font-style:italic">Chic</em></span>
+                                    <div style="flex:1"></div>
+                                    <div id="pv-btn"
+                                        style="color:#fff;padding:6px 15px;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase">
+                                        Commander</div>
+                                </div>
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+                                    <div id="pv-card1" style="padding:13px;border:1px solid rgba(200,170,255,.1)">
+                                        <div id="pv-img1" style="height:55px;margin-bottom:8px"></div>
+                                        <div style="font-size:.75rem;margin-bottom:4px" id="pv-pname">Abaya Élégante
+                                        </div>
+                                        <div id="pv-price" style="font-family:var(--ff);font-size:.96rem">249 Dh</div>
+                                    </div>
+                                    <div id="pv-card2" style="padding:13px;border:1px solid rgba(200,170,255,.1)">
+                                        <div id="pv-img2" style="height:55px;margin-bottom:8px"></div>
+                                        <div style="font-size:.75rem;margin-bottom:4px">Robe Camel</div>
+                                        <div id="pv-price2" style="font-family:var(--ff);font-size:.96rem">199 Dh</div>
+                                    </div>
+                                    <div id="pv-testi" style="padding:13px;border:1px solid rgba(200,170,255,.1)">
+                                        <div id="pv-tbar" style="height:2px;margin-bottom:10px"></div>
+                                        <div style="font-size:.75rem;font-style:italic;margin-bottom:4px">"Qualité
+                                            parfaite !"</div>
+                                        <div id="pv-stars"
+                                            style="font-size:.6rem;text-transform:uppercase;letter-spacing:.1em">★★★★★
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-actions" style="margin-top:20px">
+                            <button class="btn-fill" onclick="applyTheme()"><span>✦ Appliquer le thème</span></button>
+                            <button class="btn-ghost" onclick="resetTheme()">Réinitialiser</button>
+                        </div>
+                    </div>
+
+                    <div class="table-card">
+                        <h3
+                            style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:14px">
+                            Police des titres</h3>
+                        <div class="font-presets-grid" id="font-presets-grid"></div>
+                    </div>
+                </div>
+
+                <!-- ── CONTENT ── -->
+                <div class="admin-page" id="page-content">
+                    <div class="page-header">
+                        <h2 class="page-title">Textes & <em>contenu</em></h2>
+                        <button class="btn-fill" onclick="saveContent()"><span>✦ Enregistrer tout</span></button>
+                    </div>
+                    <p style="font-size:.75rem;color:var(--tx3);margin-bottom:22px;line-height:1.75">Modifiez tous les
+                        textes visibles sur votre boutique. Les changements s'appliquent instantanément à
+                        l'enregistrement.</p>
+
+                    <div class="editor-section">
+                        <div class="editor-section-hdr" onclick="toggleSection(this)">
+                            <h4>🏠 Section Hero</h4><span class="editor-toggle">▾</span>
+                        </div>
+                        <div class="editor-body">
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Tag (sous-titre)</label><input
+                                        class="form-field" id="ec-htag" placeholder="Boutique en ligne • Maroc"></div>
+                                <div class="form-group"><label class="form-label">Titre ligne 1</label><input
+                                        class="form-field" id="ec-hl1"></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Titre ligne 2</label><input
+                                        class="form-field" id="ec-hl2"></div>
+                                <div class="form-group"><label class="form-label">Titre ligne 3 (italique
+                                        coloré)</label><input class="form-field" id="ec-hl3"></div>
+                            </div>
+                            <div class="editor-row full">
+                                <div class="form-group"><label class="form-label">Description</label><textarea
+                                        class="form-field" id="ec-hdesc"></textarea></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Bouton principal</label><input
+                                        class="form-field" id="ec-hbtn1"></div>
+                                <div class="form-group"><label class="form-label">Bouton secondaire</label><input
+                                        class="form-field" id="ec-hbtn2"></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Stat 1 — nombre</label><input
+                                        class="form-field" id="ec-stat1v"></div>
+                                <div class="form-group"><label class="form-label">Stat 1 — label</label><input
+                                        class="form-field" id="ec-stat1l"></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Stat 3 — nombre</label><input
+                                        class="form-field" id="ec-stat3v"></div>
+                                <div class="form-group"><label class="form-label">Stat 3 — label</label><input
+                                        class="form-field" id="ec-stat3l"></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Prix image hero 2</label><input
+                                        class="form-field" id="ec-hp1"></div>
+                                <div class="form-group"><label class="form-label">Prix image hero 3</label><input
+                                        class="form-field" id="ec-hp2"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="editor-section">
+                        <div class="editor-section-hdr" onclick="toggleSection(this)">
+                            <h4>📢 Bandeau défilant</h4><span class="editor-toggle">▾</span>
+                        </div>
+                        <div class="editor-body">
+                            <div class="form-group full"><label class="form-label">Messages (1 par
+                                    ligne)</label><textarea class="form-field" id="ec-marquee"
+                                    style="min-height:120px"></textarea></div>
+                        </div>
+                    </div>
+
+                    <div class="editor-section">
+                        <div class="editor-section-hdr" onclick="toggleSection(this)">
+                            <h4>👗 Section Collection</h4><span class="editor-toggle">▾</span>
+                        </div>
+                        <div class="editor-body">
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Label</label><input class="form-field"
+                                        id="ec-col-lbl"></div>
+                                <div class="form-group"><label class="form-label">Titre part 1</label><input
+                                        class="form-field" id="ec-col-t1"></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Titre italique</label><input
+                                        class="form-field" id="ec-col-t2"></div>
+                                <div class="form-group"><label class="form-label">Titre part 3</label><input
+                                        class="form-field" id="ec-col-t3"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="editor-section">
+                        <div class="editor-section-hdr" onclick="toggleSection(this)">
+                            <h4>🌙 Bannière Ramadan</h4><span class="editor-toggle">▾</span>
+                        </div>
+                        <div class="editor-body">
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Tag</label><input class="form-field"
+                                        id="ec-rtag"></div>
+                                <div class="form-group"><label class="form-label">Titre</label><input class="form-field"
+                                        id="ec-rtitle"></div>
+                            </div>
+                            <div class="editor-row full">
+                                <div class="form-group"><label class="form-label">Description</label><textarea
+                                        class="form-field" id="ec-rdesc"></textarea></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Prix carte 1</label><input
+                                        class="form-field" id="ec-rc1p"></div>
+                                <div class="form-group"><label class="form-label">Nom carte 1</label><input
+                                        class="form-field" id="ec-rc1n"></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Prix carte 2</label><input
+                                        class="form-field" id="ec-rc2p"></div>
+                                <div class="form-group"><label class="form-label">Nom carte 2</label><input
+                                        class="form-field" id="ec-rc2n"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="editor-section">
+                        <div class="editor-section-hdr" onclick="toggleSection(this)">
+                            <h4>✨ Avantages</h4><span class="editor-toggle">▾</span>
+                        </div>
+                        <div class="editor-body" id="feats-editor"></div>
+                    </div>
+
+                    <div class="editor-section">
+                        <div class="editor-section-hdr" onclick="toggleSection(this)">
+                            <h4>⭐ Témoignages</h4><span class="editor-toggle">▾</span>
+                        </div>
+                        <div class="editor-body">
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Label section</label><input
+                                        class="form-field" id="ec-tlbl"></div>
+                                <div class="form-group"><label class="form-label">Titre (italique)</label><input
+                                        class="form-field" id="ec-ttitle"></div>
+                            </div>
+                            <div id="testi-editor"></div>
+                        </div>
+                    </div>
+
+                    <div class="editor-section">
+                        <div class="editor-section-hdr" onclick="toggleSection(this)">
+                            <h4>🔻 Footer</h4><span class="editor-toggle">▾</span>
+                        </div>
+                        <div class="editor-body">
+                            <div class="editor-row full">
+                                <div class="form-group"><label class="form-label">Description boutique</label><textarea
+                                        class="form-field" id="ec-fdesc"></textarea></div>
+                            </div>
+                            <div class="editor-row">
+                                <div class="form-group"><label class="form-label">Copyright</label><input
+                                        class="form-field" id="ec-fcopy"></div>
+                                <div class="form-group"><label class="form-label">Titre colonne 1</label><input
+                                        class="form-field" id="ec-fc1h"></div>
+                            </div>
+                            <div class="form-group full" style="margin-top:12px"><label class="form-label">Liens colonne
+                                    1 (1 par ligne)</label><textarea class="form-field" id="ec-fc1"
+                                    style="min-height:80px"></textarea></div>
+                            <div class="form-group full" style="margin-top:12px"><label class="form-label">Liens colonne
+                                    2</label><textarea class="form-field" id="ec-fc2"
+                                    style="min-height:80px"></textarea></div>
+                            <div class="form-group full" style="margin-top:12px"><label class="form-label">Liens colonne
+                                    3</label><textarea class="form-field" id="ec-fc3"
+                                    style="min-height:80px"></textarea></div>
+                        </div>
+                    </div>
+
+                    <button class="btn-fill" style="margin-top:12px;padding:13px 34px" onclick="saveContent()"><span>✦
+                            Enregistrer tout le contenu</span></button>
+                </div>
+
+                <!-- ── SETTINGS ── -->
+                <div class="admin-page" id="page-settings">
+                    <div class="page-header">
+                        <h2 class="page-title">Para<em>mètres</em></h2>
+                    </div>
+                    <div class="table-card" style="max-width:600px;margin-bottom:16px">
+                        <h3
+                            style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:18px">
+                            Boutique</h3>
+                        <div class="form-group" style="margin-bottom:13px"><label class="form-label">Numéro
+                                WhatsApp</label><input class="form-field" type="tel" id="s-wa"></div>
+                        <div class="form-group" style="margin-bottom:13px"><label class="form-label">Nom de la
+                                boutique</label><input class="form-field" type="text" id="s-name"></div>
+                        <div class="form-group" style="margin-bottom:18px"><label class="form-label">Instagram
+                                URL</label><input class="form-field" type="url" id="s-ig"></div>
+                        <button class="btn-fill" onclick="saveSettings()"><span>Sauvegarder</span></button>
+                    </div>
+                    <div class="table-card" style="max-width:600px">
+                        <h3
+                            style="font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--tx3);margin-bottom:18px">
+                            Mot de passe</h3>
+                        <div class="form-group" style="margin-bottom:13px"><label class="form-label">Mot de passe
+                                actuel</label><input class="form-field" type="password" id="s-pw-old"></div>
+                        <div class="form-group" style="margin-bottom:13px"><label class="form-label">Nouveau mot de
+                                passe</label><input class="form-field" type="password" id="s-pw-new"></div>
+                        <div class="form-group" style="margin-bottom:18px"><label
+                                class="form-label">Confirmer</label><input class="form-field" type="password"
+                                id="s-pw-confirm"></div>
+                        <button class="btn-fill" onclick="changePassword()"><span>Changer</span></button>
+                    </div>
+                </div>
+
+            </div><!-- /admin-content -->
+        </div><!-- /admin-layout -->
+    </div><!-- /admin -->
+
+    <!-- CONFIRM -->
+    <div class="confirm-wrap" id="confirm-modal">
+        <div class="confirm-box">
+            <h4 id="confirm-title"></h4>
+            <p id="confirm-msg"></p>
+            <div class="confirm-btns">
+                <button class="btn-fill" id="confirm-yes"><span>Confirmer</span></button>
+                <button class="btn-ghost" onclick="closeConfirm()">Annuler</button>
+            </div>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        /* ════════════════════════════════════════════════════
+           PARTICLES
+        ════════════════════════════════════════════════════ */
+        (() => {
+            const cv = document.getElementById('cvs'), ctx = cv.getContext('2d');
+            let W, H, pts = [];
+            const resize = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
+            resize(); addEventListener('resize', resize);
+            class Pt {
+                reset(init = false) {
+                    this.x = Math.random() * W; this.y = init ? Math.random() * H : H + 6;
+                    this.r = Math.random() * 1.7 + .3; this.vy = -(Math.random() * .42 + .1);
+                    this.vx = (Math.random() - .5) * .18; this.op = Math.random() * .55 + .1;
+                    this.hue = Math.random() < .65 ? 265 + Math.random() * 45 : 300 + Math.random() * 30;
+                }
+                constructor() { this.reset(true); }
+                tick() { this.x += this.vx; this.y += this.vy; this.op -= .0007; if (this.y < -8 || this.op <= 0) this.reset(); }
+                draw() { ctx.save(); ctx.globalAlpha = this.op; ctx.shadowBlur = 10; ctx.shadowColor = `hsl(${this.hue},85%,72%)`; ctx.fillStyle = `hsl(${this.hue},85%,76%)`; ctx.beginPath(); ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2); ctx.fill(); ctx.restore(); }
+            }
+            for (let i = 0; i < 140; i++)pts.push(new Pt());
+            const loop = () => { ctx.clearRect(0, 0, W, H); pts.forEach(p => { p.tick(); p.draw(); }); requestAnimationFrame(loop); };
+            loop();
+        })();
+
+        /* ════════════════════════════════════════════════════
+           SECRET LOGO TRIGGER (5 clicks within 2s)
+        ════════════════════════════════════════════════════ */
+        let _lc = 0, _lt = null;
+        document.getElementById('logo-el').addEventListener('click', function (e) {
+            e.preventDefault();
+            const el = this; el.style.opacity = '.55'; setTimeout(() => el.style.opacity = '1', 110);
+            _lc++; if (_lt) clearTimeout(_lt);
+            _lt = setTimeout(() => _lc = 0, 2100);
+            if (_lc >= 5) { _lc = 0; clearTimeout(_lt); showLogin(); }
+        });
+
+        /* ════════════════════════════════════════════════════
+           DATA LAYER
+        ════════════════════════════════════════════════════ */
+        const DEFAULT_PRODUCTS = [
+            { id: 1, name: "Abaya Élégante Bleu Marine", price: 249, cat: "Abaya", badge: "Nouveau", img: "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=500&q=80", imgs: [], desc: "Abaya moderne en tissu fluide, coupe ample et raffinée.", stock: "instock", visible: 1 },
+            { id: 2, name: "Ensemble Beige Camel", price: 199, cat: "Ensemble", badge: "", img: "https://images.unsplash.com/photo-1625750331870-624de6fd3452?w=500&q=80", imgs: [], desc: "Ensemble deux pièces en beige camel, parfait pour toutes occasions.", stock: "instock", visible: 1 },
+            { id: 3, name: "Robe Fluide Gris Perle", price: 169, cat: "Robe", badge: "Populaire", img: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=500&q=80", imgs: [], desc: "Robe longue en tissu léger, coupe décontractée et chic.", stock: "instock", visible: 1 },
+            { id: 4, name: "Abaya Bordeaux Premium", price: 279, cat: "Abaya", badge: "", img: "https://images.unsplash.com/photo-1594938298603-c8148c4b4057?w=500&q=80", imgs: [], desc: "Abaya luxueuse en tissu premium bordeaux.", stock: "instock", visible: 1 },
+            { id: 5, name: "Abaya Ramadan Blanche", price: 149, cat: "Ramadan", badge: "Ramadan ❤️🌙", img: "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=500&q=80", imgs: [], desc: "Abaya spéciale Ramadan, tissu léger et élégant.", stock: "instock", visible: 1 },
+            { id: 6, name: "Robe Camel Longue", price: 189, cat: "Robe", badge: "", img: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80", imgs: [], desc: "Robe longue camel chic pour toutes occasions.", stock: "outstock", visible: 1 },
+        ];
+        const DEFAULT_ORDERS = [
+            { id: 1001, date: "2026-03-01", name: "Fatima Zahra", tel: "0612345678", product: "Abaya Élégante", city: "Casablanca", price: 249, status: "delivered" },
+            { id: 1002, date: "2026-03-01", name: "Khadija Mansouri", tel: "0623456789", product: "Ensemble Beige", city: "Rabat", price: 199, status: "delivered" },
+            { id: 1003, date: "2026-03-02", name: "Nadia Benali", tel: "0634567890", product: "Abaya Ramadan", city: "Marrakech", price: 149, status: "confirmed" },
+            { id: 1004, date: "2026-03-02", name: "Sara El Amrani", tel: "0645678901", product: "Robe Gris Perle", city: "Fès", price: 169, status: "pending" },
+            { id: 1005, date: "2026-03-03", name: "Imane Ouali", tel: "0656789012", product: "Abaya Bordeaux", city: "Agadir", price: 279, status: "pending" },
+            { id: 1006, date: "2026-03-03", name: "Zineb Tazi", tel: "0667890123", product: "Ensemble Beige", city: "Tanger", price: 199, status: "pending" },
+        ];
+        const DEFAULT_SETTINGS = { wa: "212600000000", name: "Magic Chic", ig: "https://instagram.com/magic__chic_", pw: "admin123" };
+        const DEFAULT_CONTENT = {
+            htag: "Boutique en ligne • Maroc", hl1: "L'élégance", hl2: "au féminin", hl3: "redéfinie.",
+            hdesc: "Des tenues soigneusement sélectionnées pour la femme moderne. Livraison partout au Maroc, paiement cash à la livraison.",
+            hbtn1: "Découvrir la collection", hbtn2: "Collection Ramadan ❤️🌙",
+            stat1v: "15.3K", stat1l: "Abonnées", stat3v: "100%", stat3l: "Satisfaction",
+            hp1: "199 Dh", hp2: "149 Dh",
+            marquee: ["Livraison partout au Maroc", "Paiement cash à la livraison", "Collection Ramadan 2026", "Nouveaux modèles chaque semaine", "Qualité premium", "Boutique magique سحر"],
+            colLbl: "Notre sélection", colT1: "Collection ", colT2: "printemps", colT3: " 2026",
+            rtag: "Édition spéciale", rtitle: "Collection\nRamadan 2026\n❤️🌙", rdesc: "Des tenues spécialement sélectionnées pour le mois sacré. Abayas, robes et ensembles dans des couleurs raffinées.",
+            rc1p: "149", rc1n: "Abaya Ramadan", rc2p: "199", rc2n: "Ensemble Soirée",
+            feats: [
+                { i: "🚚", t: "Livraison nationale", d: "Livraison partout au Maroc, rapide et fiable." },
+                { i: "💵", t: "Paiement à la livraison", d: "Cash à la réception — sans risque, sans avance." },
+                { i: "✨", t: "Qualité garantie", d: "Tissus soigneusement sélectionnés, coupes élégantes." },
+                { i: "💬", t: "Service client", d: "Disponible sur WhatsApp & Instagram 7j/7." }
+            ],
+            tlbl: "Nos clientes témoignent", ttitle: "clients",
+            testi: [
+                { text: "La qualité est vraiment au rendez-vous, j'ai commandé une abaya et elle est exactement comme sur les photos. Livraison rapide !", name: "Fatima Z. — Casablanca", stars: "★★★★★" },
+                { text: "Très satisfaite de mon achat ! Le tissu est doux et la coupe est parfaite. Je recommande Magic Chic à toutes mes amies.", name: "Khadija M. — Rabat", stars: "★★★★★" },
+                { text: "Collection Ramadan magnifique ! Paiement cash très pratique. La boutique est sérieuse et professionnelle, bravo !", name: "Nadia B. — Marrakech", stars: "★★★★★" }
+            ],
+            iglbl: "Suivez-nous",
+            fdesc: "Boutique en ligne de mode féminine au Maroc. Livraison partout au Maroc, paiement cash à la livraison.",
+            fcopy: "© 2026 Magic Chic. Tous droits réservés.",
+            fc1h: "Collections", fc1: ["Abayas", "Robes longues", "Ensembles", "Collection Ramadan", "Nouveautés"],
+            fc2: ["Comment commander", "Livraison", "Retours", "FAQ"],
+            fc3: ["Instagram: @magic__chic_", "WhatsApp disponible", "7 jours sur 7", "Maroc 🇲🇦"]
+        };
+        const DEF_HERO_IMGS = ['https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=800&q=80', 'https://images.unsplash.com/photo-1625750331870-624de6fd3452?w=600&q=80', 'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=600&q=80'];
+        const DEF_IG_IMGS = ['https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=400&q=80', 'https://images.unsplash.com/photo-1625750331870-624de6fd3452?w=400&q=80', 'https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=400&q=80', 'https://images.unsplash.com/photo-1594938298603-c8148c4b4057?w=400&q=80', 'https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=400&q=80'];
+
+        function gd(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } }
+        function sd(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { } }
+        const getProds = () => gd('mc2_prods', DEFAULT_PRODUCTS);
+        const getOrds = () => gd('mc2_ords', DEFAULT_ORDERS);
+        const getSets = () => gd('mc2_sets', DEFAULT_SETTINGS);
+        const getCont = () => gd('mc2_cont', DEFAULT_CONTENT);
+
+        let cart = [], currentProduct = '', confirmCB = null;
+
+        /* ════════════════════════════════════════════════════
+           BOOT
+        ════════════════════════════════════════════════════ */
+        window.onload = () => {
+            ['mc2_prods', 'mc2_ords', 'mc2_sets', 'mc2_cont'].forEach((k, i) => { if (!localStorage.getItem(k)) sd(k, [DEFAULT_PRODUCTS, DEFAULT_ORDERS, DEFAULT_SETTINGS, DEFAULT_CONTENT][i]); });
+            document.getElementById('dash-date').textContent = new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            // Apply saved theme & font
+            const savedTheme = gd('mc2_theme', null);
+            if (savedTheme) applyThemeToDoc(savedTheme);
+            const savedFont = gd('mc2_font', null);
+            if (savedFont) applyFontToDoc(savedFont);
+            // Render
+            applyContent();
+            loadSavedImages();
+            renderStore();
+            initReveal();
+            addEventListener('scroll', () => { document.getElementById('main-nav').classList.toggle('scrolled', scrollY > 40); });
+        };
+
+        /* ════════════════════════════════════════════════════
+           CONTENT APPLICATION
+        ════════════════════════════════════════════════════ */
+        function applyContent() {
+            const c = getCont();
+            const S = DEFAULT_CONTENT;
+            const el = id => document.getElementById(id);
+            // Hero
+            el('hero-eyebrow').textContent = c.htag || S.htag;
+            el('h1-line1').textContent = c.hl1 || S.hl1;
+            el('h1-line2').textContent = c.hl2 || S.hl2;
+            el('h1-em').textContent = c.hl3 || S.hl3;
+            el('hero-desc').textContent = c.hdesc || S.hdesc;
+            el('hero-btn1').innerHTML = `<span>${esc(c.hbtn1 || S.hbtn1)}</span>`;
+            el('hero-btn2').textContent = c.hbtn2 || S.hbtn2;
+            el('stat1-val').textContent = c.stat1v || S.stat1v;
+            el('stat1-lbl').textContent = c.stat1l || S.stat1l;
+            el('stat3-val').textContent = c.stat3v || S.stat3v;
+            el('stat3-lbl').textContent = c.stat3l || S.stat3l;
+            el('hero-price-1').textContent = c.hp1 || S.hp1;
+            el('hero-price-2').textContent = c.hp2 || S.hp2;
+            // Marquee
+            const mq = c.marquee || S.marquee;
+            const doubled = [...mq, ...mq];
+            el('marquee-track').innerHTML = doubled.map(m => `<span class="marquee-item">${esc(m)}</span>`).join('');
+            // Collection
+            el('col-label').textContent = c.colLbl || S.colLbl;
+            el('col-t1').textContent = c.colT1 || S.colT1;
+            el('col-t2').textContent = c.colT2 || S.colT2;
+            el('col-t3').textContent = c.colT3 || S.colT3;
+            // Ramadan
+            el('ram-tag').textContent = c.rtag || S.rtag;
+            el('ram-title').innerHTML = (c.rtitle || S.rtitle).replace(/\n/g, '<br>');
+            el('ram-desc').textContent = c.rdesc || S.rdesc;
+            el('rcard1-price').textContent = c.rc1p || S.rc1p;
+            el('rcard1-name').textContent = c.rc1n || S.rc1n;
+            el('rcard2-price').textContent = c.rc2p || S.rc2p;
+            el('rcard2-name').textContent = c.rc2n || S.rc2n;
+            // Features
+            const feats = c.feats || S.feats;
+            for (let i = 0; i < 4; i++) { el(`feat${i + 1}-icon`).textContent = feats[i]?.i || S.feats[i].i; el(`feat${i + 1}-title`).textContent = feats[i]?.t || S.feats[i].t; el(`feat${i + 1}-desc`).textContent = feats[i]?.d || S.feats[i].d; }
+            // Testimonials
+            el('testi-label').textContent = c.tlbl || S.tlbl;
+            el('testi-title-em').textContent = c.ttitle || S.ttitle;
+            const testi = c.testi || S.testi;
+            el('testi-grid').innerHTML = testi.map(t => `<div class="testi-card reveal"><span class="testi-q">"</span><p class="testi-text">${esc(t.text)}</p><div class="testi-stars">${t.stars || '★★★★★'}</div><div class="testi-name">${esc(t.name)}</div></div>`).join('');
+            // IG
+            el('ig-label').textContent = c.iglbl || S.iglbl;
+            // Footer
+            el('footer-desc').textContent = c.fdesc || S.fdesc;
+            el('footer-copy').textContent = c.fcopy || S.fcopy;
+            el('fcol1-head').textContent = c.fc1h || S.fc1h;
+            el('fcol1-list').innerHTML = (c.fc1 || S.fc1).map(x => `<li>${esc(x)}</li>`).join('');
+            el('fcol2-list').innerHTML = (c.fc2 || S.fc2).map(x => `<li>${esc(x)}</li>`).join('');
+            el('fcol3-list').innerHTML = (c.fc3 || S.fc3).map(x => `<li>${esc(x)}</li>`).join('');
+            // Socials
+            const s = getSets();
+            el('wa-fab').href = 'https://wa.me/' + s.wa;
+            el('footer-wa-link').href = 'https://wa.me/' + s.wa;
+            if (s.ig) { el('footer-ig-link').href = s.ig; const h = '@' + (s.ig.split('/').pop()); el('ig-link-el').textContent = h + ' →'; el('ig-link-el').href = s.ig; el('ig-handle-link').textContent = h; el('ig-handle-link').href = s.ig; }
+            document.getElementById('doc-title').textContent = (s.name || 'Magic Chic') + ' — Boutique';
+            initReveal();
+        }
+
+        /* ════════════════════════════════════════════════════
+           STORE RENDER
+        ════════════════════════════════════════════════════ */
+        function renderStore() {
+            const prods = getProds().filter(p => p.visible == 1);
+            document.getElementById('stat2-val').textContent = prods.length + '+';
+            const grid = document.getElementById('products-grid');
+            if (!prods.length) { grid.innerHTML = '<p style="color:var(--tx3);padding:18px 0">Aucun produit disponible.</p>'; return; }
+            grid.innerHTML = prods.map((p, i) => {
+                const imgs = (p.imgs && p.imgs.length) ? p.imgs : [p.img];
+                const dots = imgs.length > 1 ? `<div class="img-dots">${imgs.map((_, di) => `<div class="img-dot" data-pid="${p.id}" data-di="${di}" style="background:${di === 0 ? 'rgba(212,176,255,.9)' : 'rgba(212,176,255,.25)'}" onclick="event.stopPropagation();switchImg(${p.id},${di})"></div>`).join('')}</div>` : '';
+                return `<div class="prod-card shimmer" style="animation-delay:${i * .09}s" onclick="openModal('${esc(p.name)}','${p.price} Dh','${esc(p.desc)}')">
+      <div class="prod-img">
+        ${p.badge ? `<span class="prod-badge">${p.badge}</span>` : ''}
+        ${p.stock === 'outstock' ? `<span class="prod-badge sold" style="top:${p.badge ? '36px' : '12px'}">Épuisé</span>` : ''}
+        <img id="pimg-${p.id}" src="${imgs[0]}" alt="${esc(p.name)}" onerror="this.src='${DEF_HERO_IMGS[0]}'">
+        ${dots}
+        <div class="prod-actions">
+          ${p.stock === 'instock'
+                        ? `<button onclick="event.stopPropagation();addToCart(${p.id})">🛍️ Panier</button><button onclick="event.stopPropagation();openModal('${esc(p.name)}','${p.price} Dh','${esc(p.desc)}')">Commander</button>`
+                        : `<button disabled style="opacity:.35;cursor:not-allowed">Épuisé</button>`}
+        </div>
+      </div>
+      <div class="prod-name">${p.name}</div>
+      <div class="prod-price">${p.price} Dh</div>
+    </div>`;
+            }).join('');
+            // IG grid
+            const igImgs = gd('mc2_ig_imgs', DEF_IG_IMGS);
+            document.getElementById('ig-grid').innerHTML = igImgs.map(src => `<div class="ig-item"><img src="${src}" alt=""><div class="ig-overlay"><span>📷</span></div></div>`).join('');
+            initReveal();
+        }
+
+        function switchImg(pid, di) {
+            const p = getProds().find(x => x.id == pid); if (!p) return;
+            const imgs = (p.imgs && p.imgs.length) ? p.imgs : [p.img];
+            const el = document.getElementById('pimg-' + pid); if (el) el.src = imgs[di] || imgs[0];
+            document.querySelectorAll(`.img-dot[data-pid="${pid}"]`).forEach(d => { d.style.background = parseInt(d.dataset.di) === di ? 'rgba(212,176,255,.9)' : 'rgba(212,176,255,.25)'; });
+        }
+
+        function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;'); }
+
+        /* ════════════════════════════════════════════════════
+           MODAL / ORDER
+        ════════════════════════════════════════════════════ */
+        function openModal(title, price, desc) {
+            currentProduct = title + ' — ' + price;
+            document.getElementById('m-title').textContent = title;
+            document.getElementById('m-price').textContent = price;
+            document.getElementById('m-desc').textContent = desc;
+            document.getElementById('order-modal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() { document.getElementById('order-modal').classList.remove('open'); document.body.style.overflow = ''; }
+        document.getElementById('order-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeModal(); });
+
+        function sendOrder() {
+            const n = document.getElementById('o-name').value.trim(), t = document.getElementById('o-tel').value.trim(), c = document.getElementById('o-city').value.trim();
+            if (!n || !t || !c) { toast('Veuillez remplir tous les champs.', 'err'); return; }
+            const s = getSets();
+            const msg = `Bonjour Magic Chic 👋\n\nNouvelle commande :\n🛍️ ${currentProduct}\n\n👤 ${n}\n📞 ${t}\n📍 ${c}\n\nMerci !`;
+            const ords = getOrds(), nid = Math.max(...ords.map(o => o.id), 1000) + 1;
+            const pm = currentProduct.match(/(\d+)/);
+            ords.unshift({ id: nid, date: new Date().toISOString().split('T')[0], name: n, tel: t, product: currentProduct.split(' — ')[0], city: c, price: pm ? parseInt(pm[0]) : 0, status: 'pending' });
+            sd('mc2_ords', ords);
+            window.open('https://wa.me/' + s.wa + '?text=' + encodeURIComponent(msg), '_blank');
+            closeModal(); toast('Commande envoyée ✦', 'ok');
+            ['o-name', 'o-tel', 'o-city'].forEach(id => document.getElementById(id).value = '');
+        }
+
+        /* ════════════════════════════════════════════════════
+           CART
+        ════════════════════════════════════════════════════ */
+        function addToCart(id) {
+            const p = getProds().find(x => x.id == id); if (!p) return;
+            const ex = cart.find(x => x.id == id);
+            if (ex) ex.qty++; else cart.push({ ...p, qty: 1 });
+            updateCartBadge(); toast(p.name + ' ajouté ✦', 'ok');
+        }
+        function updateCartBadge() { document.getElementById('cart-num').textContent = cart.reduce((a, c) => a + c.qty, 0); }
+        function openCart() { renderCart(); document.getElementById('cart-modal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closeCart() { document.getElementById('cart-modal').classList.remove('open'); document.body.style.overflow = ''; }
+        function renderCart() {
+            const el = document.getElementById('cart-items');
+            if (!cart.length) { el.innerHTML = '<p style="color:var(--tx3);text-align:center;padding:20px 0">Panier vide.</p>'; document.getElementById('cart-total').textContent = ''; document.getElementById('cart-checkout-btn').style.display = 'none'; return; }
+            el.innerHTML = cart.map(x => `<div style="display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--bdr)"><img src="${x.img}" style="width:46px;height:56px;object-fit:cover;filter:saturate(.55)"><div style="flex:1"><div style="font-size:.8rem;margin-bottom:3px;color:var(--tx2)">${x.name}</div><div style="font-family:var(--ff);font-size:.94rem;color:var(--p2)">${x.price} Dh × ${x.qty}</div></div><button onclick="removeFromCart(${x.id})" style="background:none;border:none;cursor:pointer;color:var(--tx3);font-size:1rem">✕</button></div>`).join('');
+            const total = cart.reduce((a, c) => a + c.price * c.qty, 0);
+            document.getElementById('cart-total').textContent = 'Total : ' + total + ' Dh';
+            document.getElementById('cart-checkout-btn').style.display = 'block';
+        }
+        function removeFromCart(id) { cart = cart.filter(x => x.id != id); updateCartBadge(); renderCart(); }
+        function checkoutCart() {
+            if (!cart.length) return;
+            const s = getSets();
+            const lines = cart.map(c => `• ${c.name} × ${c.qty} = ${c.price * c.qty} Dh`).join('\n');
+            const total = cart.reduce((a, c) => a + c.price * c.qty, 0);
+            window.open('https://wa.me/' + s.wa + '?text=' + encodeURIComponent(`Bonjour Magic Chic 👋\n\n${lines}\n\n💰 Total : ${total} Dh\n\nMerci !`), '_blank');
+            cart = []; updateCartBadge(); closeCart(); toast('Commande envoyée ✦', 'ok');
+        }
+        document.getElementById('cart-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeCart(); });
+
+        /* ════════════════════════════════════════════════════
+           AUTH
+        ════════════════════════════════════════════════════ */
+        function showLogin() { document.getElementById('login-screen').classList.add('open'); document.getElementById('l-user').value = ''; document.getElementById('l-pass').value = ''; document.getElementById('l-err').style.display = 'none'; }
+        function closeLogin() { document.getElementById('login-screen').classList.remove('open'); }
+        function doLogin() {
+            const u = document.getElementById('l-user').value.trim(), p = document.getElementById('l-pass').value, s = getSets();
+            if (u === 'admin' && p === (s.pw || 'admin123')) {
+                closeLogin(); document.getElementById('store').style.display = 'none'; document.getElementById('admin').style.display = 'block';
+                renderDashboard(); renderOrdersTable(); renderProductsTable();
+            } else { document.getElementById('l-err').style.display = 'block'; }
+        }
+        function doLogout() { document.getElementById('admin').style.display = 'none'; document.getElementById('store').style.display = 'block'; }
+        function goStore() { document.getElementById('admin').style.display = 'none'; document.getElementById('store').style.display = 'block'; applyContent(); renderStore(); }
+
+        /* ════════════════════════════════════════════════════
+           ADMIN NAV
+        ════════════════════════════════════════════════════ */
+        function showPage(id, el) {
+            document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+            document.getElementById('page-' + id).classList.add('active');
+            if (el) el.classList.add('active');
+            if (id === 'dashboard') renderDashboard();
+            if (id === 'orders') renderOrdersTable();
+            if (id === 'products') renderProductsTable();
+            if (id === 'add-product') resetProductForm();
+            if (id === 'images') initImagesPage();
+            if (id === 'theme') initThemePage();
+            if (id === 'content') initContentEditor();
+            if (id === 'settings') { const s = getSets(); document.getElementById('s-wa').value = s.wa || ''; document.getElementById('s-name').value = s.name || 'Magic Chic'; document.getElementById('s-ig').value = s.ig || ''; }
+        }
+
+        /* ════════════════════════════════════════════════════
+           DASHBOARD
+        ════════════════════════════════════════════════════ */
+        function renderDashboard() {
+            const ords = getOrds(), prods = getProds();
+            const tot = ords.length, rev = ords.filter(o => o.status !== 'cancelled').reduce((a, c) => a + c.price, 0);
+            const act = prods.filter(p => p.visible == 1).length, pend = ords.filter(o => o.status === 'pending').length;
+            document.getElementById('s-orders').textContent = tot;
+            document.getElementById('s-revenue').textContent = rev.toLocaleString() + ' Dh';
+            document.getElementById('s-prods').textContent = act;
+            document.getElementById('s-pending').textContent = pend;
+            document.getElementById('s-orders-d').textContent = '▲ ' + tot + ' commandes totales';
+            document.getElementById('s-revenue-d').textContent = '▲ Paiement à la livraison';
+            document.getElementById('s-prods-d').textContent = act + ' publiés';
+            document.getElementById('s-pending-d').innerHTML = pend ? `<span style="color:var(--red)">${pend} à traiter</span>` : 'À jour ✓';
+            // Bar chart
+            const days = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'], vals = [3, 5, 2, 7, 4, 6, Math.max(1, ords.filter(o => o.date === new Date().toISOString().split('T')[0]).length)];
+            const mx = Math.max(...vals, 1);
+            document.getElementById('bar-chart').innerHTML = vals.map((v, i) => `<div class="bar-wrap"><div class="bar-fill" style="height:${Math.round((v / mx) * 100)}%" title="${v}"></div><span class="bar-label">${days[i]}</span></div>`).join('');
+            // Donut
+            const stMap = { pending: 0, confirmed: 0, delivered: 0, cancelled: 0 };
+            ords.forEach(o => { if (stMap[o.status] !== undefined) stMap[o.status]++; });
+            const cols = { pending: '#f0d070', confirmed: '#5ccca0', delivered: '#60a0e8', cancelled: '#d4606a' };
+            const lbls = { pending: 'En attente', confirmed: 'Confirmée', delivered: 'Livrée', cancelled: 'Annulée' };
+            const R = 40, C = 2 * Math.PI * R; let off = 0;
+            document.getElementById('donut-svg').innerHTML = Object.entries(stMap).map(([k, v]) => { if (!v) return ''; const d = (v / tot) * C, seg = `<circle cx="60" cy="60" r="${R}" fill="none" stroke="${cols[k]}" stroke-width="16" stroke-dasharray="${d} ${C}" stroke-dashoffset="${-off}" transform="rotate(-90 60 60)"/>`; off += d; return seg; }).join('') + `<text x="60" y="65" text-anchor="middle" style="font-family:var(--ff);font-size:15px;fill:var(--tx)">${tot}</text>`;
+            document.getElementById('donut-legend').innerHTML = Object.entries(stMap).map(([k, v]) => `<div class="legend-item"><div class="legend-dot" style="background:${cols[k]}"></div>${lbls[k]}: <strong>${v}</strong></div>`).join('');
+            document.getElementById('dash-table').innerHTML = ords.slice(0, 5).map(o => `<tr><td>#${o.id}</td><td>${o.name}</td><td>${o.product}</td><td>${o.city}</td><td style="color:var(--p2)">${o.price} Dh</td><td>${statusBadge(o.status)}</td></tr>`).join('');
+        }
+
+        /* ════════════════════════════════════════════════════
+           ORDERS
+        ════════════════════════════════════════════════════ */
+        function renderOrdersTable(filter = '') {
+            let ords = getOrds();
+            if (filter) ords = ords.filter(o => [o.name, o.product, o.city].some(v => v.toLowerCase().includes(filter)));
+            document.getElementById('orders-table').innerHTML = ords.map(o => `<tr>
+    <td>#${o.id}</td><td>${o.date}</td>
+    <td><strong style="color:var(--tx)">${o.name}</strong></td><td>${o.tel}</td>
+    <td>${o.product}</td><td>${o.city}</td>
+    <td style="color:var(--p2)">${o.price} Dh</td>
+    <td>${statusBadge(o.status)}</td>
+    <td>
+      <button class="t-btn success" onclick="updateOrderStatus(${o.id},'confirmed')">✓</button>
+      <button class="t-btn" onclick="updateOrderStatus(${o.id},'delivered')">📦</button>
+      <button class="t-btn danger" onclick="updateOrderStatus(${o.id},'cancelled')">✕</button>
+      <button class="t-btn" onclick="contactViaWA('${o.tel}','${esc(o.name)}','${esc(o.product)}')">💬</button>
+    </td>
+  </tr>`).join('');
+        }
+        function filterOrders(v) { renderOrdersTable(v.toLowerCase()); }
+        function updateOrderStatus(id, st) {
+            const ords = getOrds(), o = ords.find(x => x.id == id); if (o) o.status = st; sd('mc2_ords', ords);
+            renderOrdersTable(document.getElementById('orders-search').value); toast('Statut mis à jour ✦', 'ok');
+        }
+        function contactViaWA(tel, name, prod) {
+            const t = tel.replace(/^0/, '212');
+            window.open('https://wa.me/' + t + '?text=' + encodeURIComponent(`Bonjour ${name} 👋\nVotre commande (${prod}) chez Magic Chic a été confirmée ✨`), '_blank');
+        }
+        function statusBadge(s) { const m = { pending: 'En attente', confirmed: 'Confirmée', delivered: 'Livrée', cancelled: 'Annulée' }; return `<span class="status-badge ${s}">${m[s] || s}</span>`; }
+
+        /* ════════════════════════════════════════════════════
+           PRODUCTS
+        ════════════════════════════════════════════════════ */
+        function renderProductsTable() {
+            document.getElementById('products-table').innerHTML = getProds().map(p => `<tr>
+    <td><img class="t-thumb" src="${p.img}" alt="${p.name}"></td>
+    <td><strong style="color:var(--tx)">${p.name}</strong></td>
+    <td>${p.cat}</td>
+    <td style="color:var(--p2)">${p.price} Dh</td>
+    <td><span class="status-badge ${p.stock}">${p.stock === 'instock' ? 'En stock' : 'Épuisé'}</span></td>
+    <td>${p.badge || '—'}</td>
+    <td>
+      <button class="t-btn" onclick="editProduct(${p.id})">✏️</button>
+      <button class="t-btn" onclick="toggleVisible(${p.id})">${p.visible == 1 ? '👁️' : '🙈'}</button>
+      <button class="t-btn danger" onclick="deleteProduct(${p.id})">🗑️</button>
+    </td>
+  </tr>`).join('');
+        }
+        function editProduct(id) {
+            const p = getProds().find(x => x.id == id); if (!p) return;
+            document.getElementById('fp-name').value = p.name;
+            document.getElementById('fp-price').value = p.price;
+            document.getElementById('fp-cat').value = p.cat;
+            document.getElementById('fp-badge').value = p.badge || '';
+            document.getElementById('fp-desc').value = p.desc || '';
+            document.getElementById('fp-stock').value = p.stock;
+            document.getElementById('fp-visible').value = p.visible;
+            document.getElementById('fp-edit-id').value = p.id;
+            document.getElementById('prod-form-title').innerHTML = 'Modifier le <em>produit</em>';
+            // Load images
+            prodImgs = [];
+            const imgs = (p.imgs && p.imgs.length) ? p.imgs : [p.img];
+            imgs.forEach((src, i) => prodImgs.push({ data: src, name: 'img' + (i + 1) }));
+            selectedImgIdx = 0;
+            document.getElementById('fp-img').value = prodImgs[0]?.data || '';
+            renderProdImgGallery();
+            showPage('add-product', document.querySelectorAll('.sidebar-item')[3]);
+        }
+        function toggleVisible(id) {
+            const prods = getProds(), p = prods.find(x => x.id == id); if (!p) return;
+            p.visible = p.visible == 1 ? 0 : 1; sd('mc2_prods', prods); renderProductsTable();
+            toast(p.visible == 1 ? 'Produit publié ✦' : 'Produit masqué', 'ok');
+        }
+        function deleteProduct(id) {
+            showConfirm('Supprimer ce produit ?', 'Cette action est irréversible.', () => {
+                sd('mc2_prods', getProds().filter(p => p.id != id)); renderProductsTable(); toast('Supprimé.', 'ok');
+            });
+        }
+
+        /* ════════════════════════════════════════════════════
+           PRODUCT IMAGES
+        ════════════════════════════════════════════════════ */
+        let prodImgs = [], selectedImgIdx = 0;
+        function handleProductImages(inp) {
+            const files = Array.from(inp.files); if (!files.length) return;
+            const remaining = 9 - prodImgs.length;
+            if (remaining <= 0) { toast('Maximum 9 images.', 'err'); return; }
+            let loaded = 0; const toLoad = files.slice(0, remaining);
+            toLoad.forEach(f => {
+                const r = new FileReader();
+                r.onload = e => {
+                    prodImgs.push({ data: e.target.result, name: f.name });
+                    loaded++;
+                    if (loaded === toLoad.length) {
+                        if (prodImgs.length === toLoad.length) selectedImgIdx = 0;
+                        renderProdImgGallery();
+                        document.getElementById('fp-img').value = prodImgs[selectedImgIdx].data;
+                    }
+                }; r.readAsDataURL(f);
+            });
+            inp.value = '';
+        }
+        function renderProdImgGallery() {
+            const g = document.getElementById('img-gallery'), z = document.getElementById('img-upload-zone');
+            if (!prodImgs.length) { g.innerHTML = ''; z.style.display = 'block'; return; }
+            z.style.display = prodImgs.length < 9 ? 'block' : 'none';
+            g.innerHTML = prodImgs.map((img, i) => `
+    <div style="position:relative;aspect-ratio:3/4;overflow:hidden;cursor:pointer;border:2px solid ${i === selectedImgIdx ? 'var(--p1)' : 'transparent'};transition:border-color .22s" onclick="selectProdImg(${i})">
+      <img src="${img.data}" style="width:100%;height:100%;object-fit:cover;filter:saturate(.6)">
+      ${i === selectedImgIdx ? `<div style="position:absolute;bottom:0;left:0;right:0;background:rgba(92,48,204,.88);color:#fff;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:5px;text-align:center">✓ Principale</div>` : ''}
+      <button style="position:absolute;top:5px;right:5px;background:rgba(0,0,0,.7);color:#fff;border:none;width:20px;height:20px;border-radius:50%;cursor:pointer;font-size:.65rem" onclick="event.stopPropagation();removeProdImg(${i})">✕</button>
+    </div>`).join('');
+        }
+        function selectProdImg(i) { selectedImgIdx = i; document.getElementById('fp-img').value = prodImgs[i].data; renderProdImgGallery(); }
+        function removeProdImg(i) { prodImgs.splice(i, 1); if (selectedImgIdx >= prodImgs.length) selectedImgIdx = Math.max(0, prodImgs.length - 1); document.getElementById('fp-img').value = prodImgs[selectedImgIdx]?.data || ''; renderProdImgGallery(); }
+
+        function saveProduct() {
+            const name = document.getElementById('fp-name').value.trim(), price = parseInt(document.getElementById('fp-price').value), img = document.getElementById('fp-img').value.trim();
+            if (!name || !price) { toast('Nom et prix requis.', 'err'); return; }
+            if (!img) { toast('Choisissez au moins une image.', 'err'); return; }
+            const cat = document.getElementById('fp-cat').value, badge = document.getElementById('fp-badge').value;
+            const desc = document.getElementById('fp-desc').value.trim(), stock = document.getElementById('fp-stock').value;
+            const visible = parseInt(document.getElementById('fp-visible').value), eid = document.getElementById('fp-edit-id').value;
+            const imgs = prodImgs.map(x => x.data);
+            const prods = getProds();
+            if (eid) { const p = prods.find(x => x.id == eid); if (p) Object.assign(p, { name, price, cat, badge, img, imgs, desc, stock, visible }); sd('mc2_prods', prods); toast('Produit mis à jour ✦', 'ok'); }
+            else { prods.push({ id: Math.max(...prods.map(p => p.id), 0) + 1, name, price, cat, badge, img, imgs, desc, stock, visible }); sd('mc2_prods', prods); toast('Produit ajouté ✦', 'ok'); }
+            resetProductForm(); showPage('products', document.querySelectorAll('.sidebar-item')[2]);
+        }
+        function resetProductForm() {
+            ['fp-name', 'fp-price', 'fp-desc', 'fp-img', 'fp-imgs-all', 'fp-edit-id'].forEach(id => { const e = document.getElementById(id); if (e) e.value = ''; });
+            document.getElementById('fp-cat').value = 'Abaya'; document.getElementById('fp-badge').value = '';
+            document.getElementById('fp-stock').value = 'instock'; document.getElementById('fp-visible').value = '1';
+            document.getElementById('prod-form-title').innerHTML = 'Ajouter un <em>produit</em>';
+            prodImgs = []; selectedImgIdx = 0; renderProdImgGallery();
+        }
+
+        /* ════════════════════════════════════════════════════
+           IMAGES PAGE
+        ════════════════════════════════════════════════════ */
+        let heroImgs = [...DEF_HERO_IMGS], igImgs = [...DEF_IG_IMGS], curHeroSlot = 0, curIgSlot = 0;
+
+        function initImagesPage() { renderHeroSlots(); renderIgSlots(); }
+
+        function renderHeroSlots() {
+            for (let i = 0; i < 3; i++) {
+                const s = document.getElementById('hslot-' + i); if (!s) continue;
+                const src = heroImgs[i];
+                s.innerHTML = src ? `<img src="${src}" alt=""><button class="img-del-btn" onclick="event.stopPropagation();clearHeroSlot(${i})">✕</button>` :
+                    `<div class="img-slot-ph">🖼️<span>${['Image principale', 'Image 2', 'Image 3'][i]}</span><small>${['Grande', 'Prix', 'Prix'][i]}</small></div>`;
+            }
+        }
+        function renderIgSlots() {
+            for (let i = 0; i < 5; i++) {
+                const s = document.getElementById('iglot-' + i); if (!s) continue;
+                const src = igImgs[i];
+                s.innerHTML = src ? `<img src="${src}" alt=""><button class="img-del-btn" onclick="event.stopPropagation();clearIgSlot(${i})">✕</button>` :
+                    `<div class="img-slot-ph">📷<small>Photo ${i + 1}</small></div>`;
+            }
+        }
+        function triggerHeroSlot(i) { curHeroSlot = i; document.getElementById('hero-slot-input').click(); }
+        function triggerIgSlot(i) { curIgSlot = i; document.getElementById('ig-slot-input').click(); }
+        function handleHeroSlotUpload(inp) {
+            const f = inp.files[0]; if (!f) return;
+            const r = new FileReader(); r.onload = e => { heroImgs[curHeroSlot] = e.target.result; renderHeroSlots(); inp.value = ''; }; r.readAsDataURL(f);
+        }
+        function handleIgSlotUpload(inp) {
+            const f = inp.files[0]; if (!f) return;
+            const r = new FileReader(); r.onload = e => { igImgs[curIgSlot] = e.target.result; renderIgSlots(); inp.value = ''; }; r.readAsDataURL(f);
+        }
+        function clearHeroSlot(i) { heroImgs[i] = DEF_HERO_IMGS[i]; renderHeroSlots(); }
+        function clearIgSlot(i) { igImgs[i] = DEF_IG_IMGS[i]; renderIgSlots(); }
+        function applyHeroImages() {
+            sd('mc2_hero_imgs', heroImgs);
+            for (let i = 0; i < 3; i++) { const el = document.getElementById('hero-img-' + i); if (el && heroImgs[i]) el.src = heroImgs[i]; }
+            toast('Images hero appliquées ✦', 'ok');
+        }
+        function applyIgImages() {
+            sd('mc2_ig_imgs', igImgs); renderStore(); toast('Photos Instagram appliquées ✦', 'ok');
+        }
+        function resetHeroImages() { heroImgs = [...DEF_HERO_IMGS]; renderHeroSlots(); applyHeroImages(); toast('Images réinitialisées', 'ok'); }
+        function resetIgImages() { igImgs = [...DEF_IG_IMGS]; renderIgSlots(); applyIgImages(); toast('Photos réinitialisées', 'ok'); }
+        function loadSavedImages() {
+            const sh = gd('mc2_hero_imgs', null);
+            if (sh) { heroImgs = [...sh]; sh.forEach((s, i) => { const el = document.getElementById('hero-img-' + i); if (el && s) el.src = s; }); }
+            const si = gd('mc2_ig_imgs', null);
+            if (si) igImgs = [...si];
+        }
+
+        /* ════════════════════════════════════════════════════
+           THEME PAGE
+        ════════════════════════════════════════════════════ */
+        const THEME_PRESETS = [
+            { name: 'Mauve Nuit', c: { p1: '#a87eff', p2: '#d4b0ff', ac: '#ffb8e0', bg: '#09080f', card: '#1a163a', tx: '#f2edff', p3: '#5c30cc' }, swatch: 'linear-gradient(135deg,#09080f,#5c30cc,#d4b0ff)' },
+            { name: 'Rose Mystère', c: { p1: '#d464a0', p2: '#f0a8cc', ac: '#ffd0e8', bg: '#100810', card: '#22102a', tx: '#ffeef8', p3: '#8a2868' }, swatch: 'linear-gradient(135deg,#100810,#8a2868,#f0a8cc)' },
+            { name: 'Émeraude', c: { p1: '#3db88a', p2: '#7adfc0', ac: '#a8ffd8', bg: '#060f0c', card: '#0c2018', tx: '#e8fff6', p3: '#1a7a50' }, swatch: 'linear-gradient(135deg,#060f0c,#1a7a50,#7adfc0)' },
+            { name: 'Or & Nuit', c: { p1: '#c8a840', p2: '#e8c870', ac: '#ffeaa0', bg: '#090800', card: '#1c1400', tx: '#fff8e0', p3: '#887020' }, swatch: 'linear-gradient(135deg,#090800,#887020,#e8c870)' },
+            { name: 'Bleu Cobalt', c: { p1: '#4880e8', p2: '#88b0ff', ac: '#b0d0ff', bg: '#060a18', card: '#101a30', tx: '#eef2ff', p3: '#1e4098' }, swatch: 'linear-gradient(135deg,#060a18,#1e4098,#88b0ff)' },
+        ];
+        const FONT_PRESETS = [
+            { name: 'Cormorant', label: 'Élégant', f: "'Cormorant Garamond', serif" },
+            { name: 'Playfair', label: 'Classique', f: "'Playfair Display', serif" },
+            { name: 'Cinzel', label: 'Romain', f: "'Cinzel', serif" },
+            { name: 'DM Serif', label: 'Moderne', f: "'DM Serif Display', serif" },
+        ];
+
+        function initThemePage() {
+            const cur = gd('mc2_theme', THEME_PRESETS[0].c);
+            document.getElementById('theme-presets-grid').innerHTML = THEME_PRESETS.map((t, i) => `<div class="theme-preset ${JSON.stringify(cur) === JSON.stringify(t.c) ? 'active' : ''}" onclick="selectPreset(${i})"><div class="theme-swatch" style="background:${t.swatch}"></div><div class="theme-preset-name">${t.name}</div></div>`).join('');
+            const curF = gd('mc2_font', FONT_PRESETS[0].f);
+            document.getElementById('font-presets-grid').innerHTML = FONT_PRESETS.map((f, i) => `<div class="font-preset ${curF === f.f ? 'active' : ''}" onclick="selectFont(${i})"><div class="font-preview" style="font-family:${f.f}">${f.name}</div><div class="font-name">${f.label}</div></div>`).join('');
+            loadColorsIntoForm(cur);
+            bindColorPickers();
+        }
+        function loadColorsIntoForm(c) {
+            [['tc-p1', 'th-p1', c.p1], ['tc-p2', 'th-p2', c.p2], ['tc-ac', 'th-ac', c.ac], ['tc-bg', 'th-bg', c.bg], ['tc-card', 'th-card', c.card], ['tc-tx', 'th-tx', c.tx]].forEach(([pid, hid, val]) => { if (!val) return; const p = document.getElementById(pid), h = document.getElementById(hid); if (p) p.value = val; if (h) h.value = val; });
+            updateLivePreview(c);
+        }
+        function bindColorPickers() {
+            ['p1', 'p2', 'ac', 'bg', 'card', 'tx'].forEach(k => {
+                const p = document.getElementById('tc-' + k);
+                if (p) p.oninput = () => { document.getElementById('th-' + k).value = p.value; updateLivePreview(getFormColors()); };
+            });
+        }
+        function syncColorHex(pid, hid) { document.getElementById(hid).value = document.getElementById(pid).value; updateLivePreview(getFormColors()); }
+        function syncColorSwatch(pid, hid) { const h = document.getElementById(hid).value; if (/^#[0-9a-fA-F]{6}$/.test(h)) document.getElementById(pid).value = h; updateLivePreview(getFormColors()); }
+        function getFormColors() { return { p1: document.getElementById('tc-p1').value, p2: document.getElementById('tc-p2').value, ac: document.getElementById('tc-ac').value, bg: document.getElementById('tc-bg').value, card: document.getElementById('tc-card').value, tx: document.getElementById('tc-tx').value, p3: document.getElementById('tc-p1').value }; }
+        function updateLivePreview(c) {
+            const pv = document.getElementById('live-preview'); if (!pv) return;
+            pv.style.background = c.bg;
+            document.getElementById('pv-logo').style.color = c.tx;
+            document.getElementById('pv-logo').querySelector('em').style.color = c.p2;
+            document.getElementById('pv-btn').style.background = `linear-gradient(135deg,${c.p3 || c.p1},${c.p1})`;
+            ['pv-card1', 'pv-card2', 'pv-testi'].forEach(id => { const el = document.getElementById(id); if (el) el.style.background = c.card; });
+            ['pv-img1', 'pv-img2'].forEach(id => { const el = document.getElementById(id); if (el) el.style.background = `linear-gradient(135deg,${c.p3 || c.p1},${c.bg})`; });
+            const bar = document.getElementById('pv-tbar'); if (bar) bar.style.background = `linear-gradient(90deg,${c.p3 || c.p1},${c.p2},transparent)`;
+            ['pv-price', 'pv-price2'].forEach(id => { const el = document.getElementById(id); if (el) el.style.color = c.p2; });
+            document.getElementById('pv-pname').style.color = c.tx;
+            document.getElementById('pv-stars').style.color = c.p2;
+        }
+        function selectPreset(i) {
+            const t = THEME_PRESETS[i]; loadColorsIntoForm(t.c);
+            document.querySelectorAll('.theme-preset').forEach((el, j) => el.classList.toggle('active', i === j));
+        }
+        function selectFont(i) {
+            const f = FONT_PRESETS[i].f; sd('mc2_font', f); applyFontToDoc(f);
+            document.querySelectorAll('.font-preset').forEach((el, j) => el.classList.toggle('active', i === j));
+            toast('Police appliquée ✦', 'ok');
+        }
+        function applyFontToDoc(f) {
+            document.documentElement.style.setProperty('--ff', f);
+            document.querySelectorAll('.hero-h1,.section-title,.page-title,.footer-brand-name,.modal-title,.modal-price,.stat-val,.stat-num,.prod-price,.ram-price,.testi-q,.testi-text').forEach(el => el.style.fontFamily = f);
+        }
+        function applyTheme() {
+            const c = getFormColors(); sd('mc2_theme', c); applyThemeToDoc(c); toast('Thème appliqué ✦', 'ok');
+        }
+        function applyThemeToDoc(c) {
+            const r = document.documentElement;
+            r.style.setProperty('--p1', c.p1); r.style.setProperty('--p2', c.p2); r.style.setProperty('--p3', c.p3 || c.p1);
+            r.style.setProperty('--ac', c.ac); r.style.setProperty('--bg', c.bg); r.style.setProperty('--bg2', c.bg); r.style.setProperty('--bg3', c.bg);
+            r.style.setProperty('--card', c.card); r.style.setProperty('--tx', c.tx);
+        }
+        function resetTheme() { const c = THEME_PRESETS[0].c; sd('mc2_theme', c); applyThemeToDoc(c); initThemePage(); toast('Thème réinitialisé', 'ok'); }
+
+        /* ════════════════════════════════════════════════════
+           CONTENT EDITOR
+        ════════════════════════════════════════════════════ */
+        function initContentEditor() {
+            const c = getCont(), S = DEFAULT_CONTENT;
+            const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+            // Hero
+            set('ec-htag', c.htag || S.htag); set('ec-hl1', c.hl1 || S.hl1); set('ec-hl2', c.hl2 || S.hl2); set('ec-hl3', c.hl3 || S.hl3);
+            set('ec-hdesc', c.hdesc || S.hdesc); set('ec-hbtn1', c.hbtn1 || S.hbtn1); set('ec-hbtn2', c.hbtn2 || S.hbtn2);
+            set('ec-stat1v', c.stat1v || S.stat1v); set('ec-stat1l', c.stat1l || S.stat1l);
+            set('ec-stat3v', c.stat3v || S.stat3v); set('ec-stat3l', c.stat3l || S.stat3l);
+            set('ec-hp1', c.hp1 || S.hp1); set('ec-hp2', c.hp2 || S.hp2);
+            // Marquee
+            set('ec-marquee', (c.marquee || S.marquee).join('\n'));
+            // Collection
+            set('ec-col-lbl', c.colLbl || S.colLbl); set('ec-col-t1', c.colT1 || S.colT1); set('ec-col-t2', c.colT2 || S.colT2); set('ec-col-t3', c.colT3 || S.colT3);
+            // Ramadan
+            set('ec-rtag', c.rtag || S.rtag); set('ec-rtitle', (c.rtitle || S.rtitle).replace(/<br>/g, '\n')); set('ec-rdesc', c.rdesc || S.rdesc);
+            set('ec-rc1p', c.rc1p || S.rc1p); set('ec-rc1n', c.rc1n || S.rc1n); set('ec-rc2p', c.rc2p || S.rc2p); set('ec-rc2n', c.rc2n || S.rc2n);
+            // Features
+            const feats = c.feats || S.feats;
+            document.getElementById('feats-editor').innerHTML = feats.map((f, i) => `
+    <div style="border:1px solid var(--bdr);padding:14px;margin-bottom:10px">
+      <div style="font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--p2);margin-bottom:10px">Avantage ${i + 1}</div>
+      <div class="editor-row">
+        <div class="form-group"><label class="form-label">Icône</label><input class="form-field" id="ef-i${i}" value="${f.i || ''}"></div>
+        <div class="form-group"><label class="form-label">Titre</label><input class="form-field" id="ef-t${i}" value="${esc(f.t || '')}"></div>
+      </div>
+      <div class="form-group" style="margin-top:10px"><label class="form-label">Description</label><input class="form-field" id="ef-d${i}" value="${esc(f.d || '')}"></div>
+    </div>`).join('');
+            // Testimonials
+            set('ec-tlbl', c.tlbl || S.tlbl); set('ec-ttitle', c.ttitle || S.ttitle);
+            const testi = c.testi || S.testi;
+            document.getElementById('testi-editor').innerHTML = testi.map((t, i) => `
+    <div style="border:1px solid var(--bdr);padding:14px;margin-bottom:10px">
+      <div style="font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--p2);margin-bottom:10px">Témoignage ${i + 1}</div>
+      <div class="form-group" style="margin-bottom:10px"><label class="form-label">Texte</label><textarea class="form-field" id="et-q${i}" style="min-height:60px">${t.text || ''}</textarea></div>
+      <div class="editor-row">
+        <div class="form-group"><label class="form-label">Nom</label><input class="form-field" id="et-n${i}" value="${esc(t.name || '')}"></div>
+        <div class="form-group"><label class="form-label">Étoiles</label><input class="form-field" id="et-s${i}" value="${t.stars || '★★★★★'}"></div>
+      </div>
+    </div>`).join('');
+            // Footer
+            set('ec-fdesc', c.fdesc || S.fdesc); set('ec-fcopy', c.fcopy || S.fcopy); set('ec-fc1h', c.fc1h || S.fc1h);
+            set('ec-fc1', (c.fc1 || S.fc1).join('\n')); set('ec-fc2', (c.fc2 || S.fc2).join('\n')); set('ec-fc3', (c.fc3 || S.fc3).join('\n'));
+        }
+        function saveContent() {
+            const get = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+            const feats = []; for (let i = 0; i < 4; i++)feats.push({ i: get(`ef-i${i}`), t: get(`ef-t${i}`), d: get(`ef-d${i}`) });
+            const testi = []; for (let i = 0; i < 3; i++)testi.push({ text: get(`et-q${i}`), name: get(`et-n${i}`), stars: get(`et-s${i}`) });
+            const c = {
+                htag: get('ec-htag'), hl1: get('ec-hl1'), hl2: get('ec-hl2'), hl3: get('ec-hl3'),
+                hdesc: get('ec-hdesc'), hbtn1: get('ec-hbtn1'), hbtn2: get('ec-hbtn2'),
+                stat1v: get('ec-stat1v'), stat1l: get('ec-stat1l'), stat3v: get('ec-stat3v'), stat3l: get('ec-stat3l'),
+                hp1: get('ec-hp1'), hp2: get('ec-hp2'),
+                marquee: get('ec-marquee').split('\n').filter(x => x.trim()),
+                colLbl: get('ec-col-lbl'), colT1: get('ec-col-t1'), colT2: get('ec-col-t2'), colT3: get('ec-col-t3'),
+                rtag: get('ec-rtag'), rtitle: get('ec-rtitle'), rdesc: get('ec-rdesc'),
+                rc1p: get('ec-rc1p'), rc1n: get('ec-rc1n'), rc2p: get('ec-rc2p'), rc2n: get('ec-rc2n'),
+                feats, tlbl: get('ec-tlbl'), ttitle: get('ec-ttitle'), testi,
+                fdesc: get('ec-fdesc'), fcopy: get('ec-fcopy'), fc1h: get('ec-fc1h'),
+                fc1: get('ec-fc1').split('\n').filter(x => x.trim()),
+                fc2: get('ec-fc2').split('\n').filter(x => x.trim()),
+                fc3: get('ec-fc3').split('\n').filter(x => x.trim()),
+            };
+            sd('mc2_cont', c); toast('Contenu enregistré ✦', 'ok');
+        }
+        function toggleSection(hdr) {
+            hdr.classList.toggle('open');
+            const body = hdr.nextElementSibling;
+            body.classList.toggle('open');
+        }
+
+        /* ════════════════════════════════════════════════════
+           SETTINGS
+        ════════════════════════════════════════════════════ */
+        function saveSettings() {
+            const s = getSets();
+            s.wa = document.getElementById('s-wa').value.trim();
+            s.name = document.getElementById('s-name').value.trim();
+            s.ig = document.getElementById('s-ig').value.trim();
+            sd('mc2_sets', s); toast('Paramètres sauvegardés ✦', 'ok');
+        }
+        function changePassword() {
+            const old = document.getElementById('s-pw-old').value, nw = document.getElementById('s-pw-new').value, cf = document.getElementById('s-pw-confirm').value;
+            const s = getSets();
+            if (old !== (s.pw || 'admin123')) { toast('Mot de passe actuel incorrect.', 'err'); return; }
+            if (nw !== cf) { toast('Les mots de passe ne correspondent pas.', 'err'); return; }
+            if (nw.length < 6) { toast('Minimum 6 caractères.', 'err'); return; }
+            s.pw = nw; sd('mc2_sets', s);
+            ['s-pw-old', 's-pw-new', 's-pw-confirm'].forEach(id => document.getElementById(id).value = '');
+            toast('Mot de passe changé ✦', 'ok');
+        }
+
+        /* ════════════════════════════════════════════════════
+           TOAST / CONFIRM / REVEAL
+        ════════════════════════════════════════════════════ */
+        function toast(msg, type = '') {
+            const el = document.getElementById('toast');
+            el.textContent = msg; el.className = 'toast ' + (type || '');
+            el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2800);
+        }
+        function showConfirm(title, msg, cb) {
+            document.getElementById('confirm-title').textContent = title;
+            document.getElementById('confirm-msg').textContent = msg;
+            confirmCB = cb; document.getElementById('confirm-modal').classList.add('open');
+        }
+        function closeConfirm() { document.getElementById('confirm-modal').classList.remove('open'); confirmCB = null; }
+        document.getElementById('confirm-yes').onclick = () => { if (confirmCB) confirmCB(); closeConfirm(); };
+        document.getElementById('confirm-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeConfirm(); });
+
+        function initReveal() {
+            const obs = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold: .08 });
+            document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
+        }
+    </script>
+</body>
+
+</html>
